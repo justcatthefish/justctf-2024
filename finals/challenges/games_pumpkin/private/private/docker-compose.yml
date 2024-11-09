@@ -1,0 +1,19 @@
+version: '3'
+services:
+  instancer-pumpkin:
+    build: .
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
+    networks:
+      - minecraft-network 
+    ports:
+      - "80:3000"
+      - "25565:25565"
+    environment:
+      - NODE_ENV=development
+    restart: always
+
+networks:
+  minecraft-network:
+    name: minecraft-network
+    driver: bridge

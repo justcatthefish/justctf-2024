@@ -1,0 +1,13 @@
+version: '3'
+services:
+  minecraft-pumpkin:
+    hostname: "${UID:-pumpkin}"
+    networks:
+      - minecraft-network 
+    build: .
+    restart: unless-stopped
+  
+networks:
+  minecraft-network:
+    external:
+      name: minecraft-network

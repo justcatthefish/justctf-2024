@@ -1,0 +1,12 @@
+https://catflix.local {
+	root * .
+	file_server
+}
+
+http://catflix.local {
+	redir / https://catflix.local 302
+	header Access-Control-Allow-Origin *
+	reverse_proxy /api/* 127.0.0.1:8000
+	root /media/* .
+	file_server /media/*
+}

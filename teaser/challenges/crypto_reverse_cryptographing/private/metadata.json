@@ -1,0 +1,8 @@
+{
+    "name": "Reverse Cryptographing",
+    "identifier": "reverse_cryptographing",
+    "category": ["crypto"],
+    "difficulty": "medium",
+    "flag": "justCTF{y4d_yyyyPP4h_r333bMer_yAwl4__krr4d_5i_yaD_n3w}",
+    "version": 3
+}

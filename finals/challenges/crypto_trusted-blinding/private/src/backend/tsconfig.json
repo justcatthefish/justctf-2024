@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+       "outDir": "./build",
+       "module": "NodeNext",
+       "rootDir": "./",
+       "noEmit": false,
+       "emitDecoratorMetadata": true,
+       "target": "es2021",
+       "lib": [
+         "dom",
+         "dom.iterable",
+         "esnext"
+       ],
+       "allowJs": true,
+       "skipLibCheck": true,
+       "esModuleInterop": true,
+       "allowSyntheticDefaultImports": true,
+       "strict": true,
+       "forceConsistentCasingInFileNames": true,
+       "noFallthroughCasesInSwitch": true,
+       "experimentalDecorators": true,
+       "moduleResolution": "NodeNext",
+       "resolveJsonModule": true,
+       "isolatedModules": true
+    },
+ }

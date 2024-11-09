@@ -1,0 +1,10 @@
+{
+    "identifier": "misc_qrazy",
+    "name": "QRazy",
+    "category": ["baby", "misc"],
+    "difficulty": "easy",
+    "flag": [
+        "justCTF{qr1sf4n}"
+    ],
+    "version": 1
+}

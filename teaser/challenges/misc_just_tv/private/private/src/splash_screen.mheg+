@@ -1,0 +1,120 @@
+import(settings/view.h.mheg+)
+import(common/viewbox.h.mheg+)
+
+{:Scene("~/splash_screen.asn" 0)
+	:Items(
+		//timers
+		{:Timer validationTimer}
+		{:Timer validationDelayTimer}
+
+		{:Timer quitDelayTimer}
+
+		//constants
+		{:IntegerConst MAX_DOT_COUNT :ConstValue 3}
+		{:IntegerConst LOGO_SIZE :ConstValue 400}
+
+		//programs
+		{:ResidentPrg WhoAmI :InitiallyActive false :name "WAI" }
+		{:ResidentPrg SearchSubString :InitiallyActive false :name "SSS" }
+
+		//variables
+		{:BooleanVar residentPrgResult :OrigValue false }
+
+		{:OStringVar stateText :OrigValue "" }
+		{:OStringVar readText :OrigValue "" }
+
+		{:IntegerVar validatingDotCount :OrigValue 0}
+		{:BooleanVar validated :OrigValue false}
+
+		{:BooleanVar error :OrigValue false}
+		{:OStringVar errorMessage :OrigValue ""}
+
+		{:OStringVar whoAmI :OrigValue ""}
+
+		{:IntegerVar findPosition :OrigValue 0}
+
+		//view
+		insertMacro(setupViewBox)
+
+		{:Bitmap logo
+			:CHook 4
+			:OrigContent :ContentRef ("/img/cat.png")
+			:OrigBoxSize LOGO_SIZE LOGO_SIZE
+			:OrigPosition [(SCREEN_WIDTH - LOGO_SIZE) /2 ] 38
+		}
+
+		{:Text stateField
+			:OrigContent "Default Title"
+			:OrigBoxSize LOGO_SIZE 60
+			:OrigPosition [(SCREEN_WIDTH - LOGO_SIZE) /2 ] 438
+			:HJustification centre
+			:VJustification centre
+		}
+
+		//links
+		{:Link linkStartup
+			:EventSource 		linkStartup
+			:EventType 			IsRunning
+			:InitiallyActive	True
+
+			:LinkEffect(
+				stateText.SetVariable("Validating")
+				stateField.SetData(:IndirectRef stateText)
+				:SetTimer(0 validationTimer 1000)
+			)
+		}
+
+		{:Link validationDelayTimerEvent
+			:EventSource		0
+			:EventType			TimerFired
+			:EventData 			validationDelayTimer
+			:LinkEffect(
+				validated.SetVariable(True)
+			)
+		}
+
+		{:Link linkValidationTimerEvent
+			:EventSource		0
+			:EventType			TimerFired
+			:EventData			validationTimer
+			:LinkEffect(
+					validatingDotCount.Add(1)
+					stateText.Append(".")
+					:If (validatingDotCount > MAX_DOT_COUNT)
+					{
+						:SetTimer(0 validationDelayTimer 1000)
+					}
+
+					:If (!validated)
+					{
+						stateField.SetData(:IndirectRef stateText)
+						:If (!error)
+						{
+							:SetTimer(0 validationTimer 1000)
+						}
+						:Else
+						{
+							stateField.SetData(:IndirectRef errorMessage)
+							:SetTimer(0 quitDelayTimer 10000)
+						}
+					}
+					:Else
+					{
+						:TransitionTo(("~/main_menu.asn" 0))
+					}
+			)
+		}
+
+		{:Link quitDelayTimerEvent
+				:EventSource		0
+				:EventType			TimerFired
+				:EventData 			quitDelayTimer
+				:LinkEffect(
+					:Quit()
+				)
+		}
+	)
+
+	:InputEventReg 4
+	:SceneCS SCREEN_WIDTH SCREEN_HEIGHT
+}

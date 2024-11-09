@@ -1,0 +1,10 @@
+{
+    "name": "AntiRunMe",
+    "identifier": "babyre",
+    "category": [ "baby", "re" ],
+    "difficulty": "medium",
+    "flag": [
+        "justCTF{H0p3_y0u_l34rn3d_sth_h3r3}"
+    ],
+    "version": 1
+}

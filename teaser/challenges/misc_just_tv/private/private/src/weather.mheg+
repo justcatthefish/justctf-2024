@@ -1,0 +1,208 @@
+import(settings/view.h.mheg+)
+import(common/viewbox.h.mheg+)
+import(common/operations.h.mheg+)
+
+{:Scene("~/weather.asn" 0)
+  :Items(
+    insertMacro(operationsInit)
+
+    //constants
+    {:IntegerConst DAY_COUNT :ConstValue 3}
+
+    {:IntegerConst DAY_H_GAP :ConstValue 20}
+    {:IntegerConst DAY_V_GAP :ConstValue 80}
+
+    {:IntegerConst COLUMN_ELEMENT_V_GAP :ConstValue 4}
+    {:IntegerConst COLUMN_H_PADDING :ConstValue 5}
+
+    {:IntegerConst TEXT_HEIGHT :ConstValue 48}
+    {:IntegerConst ICON_HEIGHT :ConstValue 60}
+
+
+    {:IntegerConst ROW_HEIGHT :ConstValue 40}
+
+    //view
+    insertMacro(setupViewBox)
+
+    //boxes
+
+    {:Rectangle dayBox1
+      :OrigBoxSize [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT] [VIEW_BOX_SIZE - (2 * DAY_V_GAP)]
+      :OrigPosition [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + (0 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP]
+      :OrigRefFillColour LIGHT_GRAY
+      :OrigRefLineColour 	BLACK
+    }
+
+    {:Rectangle dayBox2
+      :OrigBoxSize [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT] [VIEW_BOX_SIZE - (2 * DAY_V_GAP)]
+      :OrigPosition [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + (1 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP]
+      :OrigRefFillColour LIGHT_GRAY
+      :OrigRefLineColour 	BLACK
+    }
+
+    {:Rectangle dayBox3
+      :OrigBoxSize [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT] [VIEW_BOX_SIZE - (2 * DAY_V_GAP)]
+      :OrigPosition [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + (2 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP]
+      :OrigRefFillColour LIGHT_GRAY
+      :OrigRefLineColour 	BLACK
+    }
+
+    //weather icons
+
+    {:Bitmap day1WeatherIcon
+      :CHook 4
+      :OrigContent :ContentRef ("/img/clouds.png")
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [ICON_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (0 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + COLUMN_ELEMENT_V_GAP]
+    }
+
+    {:Bitmap day2WeatherIcon
+      :CHook 4
+      :OrigContent :ContentRef ("/img/snow.png")
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [ICON_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (1 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + COLUMN_ELEMENT_V_GAP]
+    }
+
+    {:Bitmap day3WeatherIcon
+      :CHook 4
+      :OrigContent :ContentRef ("/img/sunny.png")
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [ICON_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (2 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + COLUMN_ELEMENT_V_GAP]
+    }
+
+    //weekdays
+    {:Text weekDay1
+      :OrigContent      "Mon"
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (0 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 2 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification   centre
+      :VJustification   centre
+    }
+
+    {:Text weekDay2
+      :OrigContent      "Tue"
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (1 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 2 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification centre
+      :VJustification centre
+    }
+
+    {:Text weekDay3
+      :OrigContent      "Wed"
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (2 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 2 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification centre
+      :VJustification centre
+    }
+
+    //date
+    {:Text date1
+      :OrigContent      "01 Jun"
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (0 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 3 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT + TEXT_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification   centre
+      :VJustification   centre
+    }
+
+    {:Text date2
+      :OrigContent      "02 Jun"
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (1 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 3 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT + TEXT_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification centre
+      :VJustification centre
+    }
+
+    {:Text date3
+      :OrigContent      "03 Jun"
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (2 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 3 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT + TEXT_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification centre
+      :VJustification centre
+    }
+
+    //Weather
+    {:Text weather1
+      :OrigContent      "Cloudy"
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (0 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 4 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT + 2 * TEXT_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification   centre
+      :VJustification   centre
+    }
+
+    {:Text weather2
+      :OrigContent      "Snowy"
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (1 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 4 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT + 2 * TEXT_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification centre
+      :VJustification centre
+    }
+
+    {:Text weather3
+      :OrigContent      "Sunny"
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (2 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 4 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT + 2 * TEXT_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification centre
+      :VJustification centre
+    }
+
+    //Weather
+    {:Text temp1
+      :OrigContent      '17=C2=B0C'
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (0 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 5 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT + 3 * TEXT_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification   centre
+      :VJustification   centre
+    }
+
+    {:Text temp2
+      :OrigContent      '-25=C2=B0C'
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (1 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 5 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT + 3 * TEXT_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification centre
+      :VJustification centre
+    }
+
+    {:Text temp3
+      :OrigContent      '25=C2=B0C'
+      :OrigBoxSize      [(VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT - 2 * COLUMN_H_PADDING] [TEXT_HEIGHT]
+      :OrigPosition     [((SCREEN_WIDTH - VIEW_BOX_SIZE) / 2) + DAY_H_GAP + COLUMN_H_PADDING + (2 * ((VIEW_BOX_SIZE - (DAY_COUNT + 1) * DAY_H_GAP) / DAY_COUNT + DAY_H_GAP))] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2 + DAY_V_GAP + 5 * COLUMN_ELEMENT_V_GAP + ICON_HEIGHT + 3 * TEXT_HEIGHT]
+      :TextColour       WHITE
+      :BackgroundColour LIGHT_GRAY
+      :HJustification centre
+      :VJustification centre
+    }
+
+    {:Link linkPressExit
+      :EventSource      0
+      :EventType        UserInput
+      :EventData        KeyExit
+      :LinkEffect(
+        :TransitionTo(("~/main_menu.asn" 0))
+      )
+    }
+  )
+  :InputEventReg 4
+  :SceneCS 720 576
+}

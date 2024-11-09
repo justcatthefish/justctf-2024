@@ -1,0 +1,10 @@
+{
+    "identifier": "misc_relocate",
+    "name": "Relocate",
+    "category": "misc",
+    "difficulty": "easy",
+    "flag": [
+        "justCTF{fl4gs_4re_cLeveR_BeAst$_ThEy_L!ke_T0_h!de_!n_str4nge_pl4ce$}"
+    ],
+    "version": 2
+}

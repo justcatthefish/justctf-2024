@@ -1,0 +1,8 @@
+{
+    "name": "Sanity check",
+    "identifier": "sanity",
+    "category": ["misc"],
+    "difficulty": "easy",
+    "flag": "justCTF{Welcome_and_check_out_Intigriti_at_go.intigriti.com/justCTF}",
+    "version": 3
+}

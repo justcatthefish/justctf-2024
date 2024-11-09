@@ -1,0 +1,122 @@
+import(settings/view.h.mheg+)
+import(common/viewbox.h.mheg+)
+import(common/operations.h.mheg+)
+
+{:Scene("~/clock.asn" 0)
+  :Items(
+    insertMacro(operationsInit)
+
+    //timers
+    {:Timer secondTimer}
+
+    //constants
+    {:IntegerConst ROW_HEIGHT :ConstValue 80}
+    {:IntegerConst ROW_MARGIN_TOP :ConstValue 30}
+
+    {:OStringVar timeTextFormat :OrigValue "%H:%M:%S"}
+    {:OStringVar dateTextFormat :OrigValue "%D.%X.%Y"}
+
+    //variables
+    {:OStringVar timeText :OrigValue ""}
+    {:OStringVar dateText :OrigValue ""}
+
+    {:IntegerVar date :OrigValue 0}
+    {:IntegerVar time :OrigValue 0}
+
+    //view
+    insertMacro(setupViewBox)
+
+    {:Text timeField
+      :OrigContent      "00:00:00"
+      :OrigBoxSize      [VIEW_BOX_SIZE / 10 * 6] ROW_HEIGHT
+      :OrigPosition     [(SCREEN_WIDTH - VIEW_BOX_SIZE) / 2 + VIEW_BOX_SIZE / 10 * 2] [SCREEN_HEIGHT / 2 - ROW_HEIGHT]
+      :FontAttributes   "plain.36.36.0"
+      :HJustification   centre
+      :VJustification   centre
+    }
+
+    {:Text dateField
+      :OrigContent      ""
+      :OrigBoxSize      [VIEW_BOX_SIZE / 10 * 6] ROW_HEIGHT
+      :OrigPosition     [(SCREEN_WIDTH - VIEW_BOX_SIZE) / 2 + VIEW_BOX_SIZE / 10 * 2] [SCREEN_HEIGHT / 2 + ROW_HEIGHT / 2]
+      :FontAttributes   "plain.36.36.0"
+      :HJustification   centre
+      :VJustification   centre
+    }
+
+    {:Link secondTimerEvent
+      :EventSource      0
+      :EventType        TimerFired
+      :EventData        secondTimer
+      :LinkEffect(
+        GetCurrentDate.Call(
+            residentPrgResult
+            :IndirectRef date
+            :IndirectRef time
+        )
+        FormatDate.Call(
+          residentPrgResult
+          :IndirectRef timeTextFormat
+          :IndirectRef date
+          :IndirectRef time
+          :IndirectRef timeText
+        )
+        FormatDate.Call(
+          residentPrgResult
+          :IndirectRef dateTextFormat
+          :IndirectRef date
+          :IndirectRef time
+          :IndirectRef dateText
+        )
+
+        timeField.SetData(:IndirectRef timeText)
+        dateField.SetData(:IndirectRef dateText)
+
+        :SetTimer(0 secondTimer 1000)
+      )
+    }
+
+    {:Link linkStartup
+      :EventSource      linkStartup
+      :EventType        IsRunning
+      :InitiallyActive  True
+      :LinkEffect(
+        GetCurrentDate.Call(
+            residentPrgResult
+            :IndirectRef date
+            :IndirectRef time
+        )
+        FormatDate.Call(
+          residentPrgResult
+          :IndirectRef timeTextFormat
+          :IndirectRef date
+          :IndirectRef time
+          :IndirectRef timeText
+        )
+        FormatDate.Call(
+          residentPrgResult
+          :IndirectRef dateTextFormat
+          :IndirectRef date
+          :IndirectRef time
+          :IndirectRef dateText
+        )
+
+        timeField.SetData(:IndirectRef timeText)
+        dateField.SetData(:IndirectRef dateText)
+
+        :SetTimer(0 secondTimer 1000)
+      )
+    }
+
+    {:Link linkPressExit
+      :EventSource      0
+      :EventType        UserInput
+      :EventData        KeyExit
+      :LinkEffect(
+        :TransitionTo(("~/main_menu.asn" 0))
+      )
+    }
+  )
+  :InputEventReg 4
+  :SceneCS 720 576
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hacker Images Gallery</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      margin: 20px 0;
+      font-size: 2em;
+      color: #333;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      max-width: 1200px;
+    }
+    .gallery img {
+      max-width: 200px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      transition: transform 0.2s;
+    }
+    .gallery img:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>We have got the best hacker pictures in the internet. Take a look:</h1>
+  <div class="gallery">
+    <% @images.each do |image| %>
+      <a href="/avatar?image=<%= image %>" target="_blank">
+        <img src="/avatar?image=<%= image %>" alt="Hacker Image">
+      </a>
+    <% end %>
+  </div>
+</body>
+</html>

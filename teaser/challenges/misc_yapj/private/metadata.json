@@ -1,0 +1,8 @@
+{
+       "name": "yapj",
+       "identifier": "misc-yapj",
+       "category": ["misc", "pwn"],
+       "flag": ["justCTF{Y0u_kn0w_th3_k3ys_to_5ucc3ss_don7_y0u}"],
+       "difficulty": "hard",
+       "version": 4
+}

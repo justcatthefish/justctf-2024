@@ -1,0 +1,8 @@
+{
+    "name": "anomaly",
+    "identifier": "misc_anomaly",
+    "category": ["misc"],
+    "flag": ["justCTF{h0stn4me_g0es_b00m_in_utmpx!!1}"],
+    "difficulty": "easy",
+    "version": 2
+}

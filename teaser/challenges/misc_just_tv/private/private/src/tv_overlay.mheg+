@@ -1,0 +1,41 @@
+import(settings/view.h.mheg+)
+
+{:Scene("~/tv_overlay.asn" 0)
+  :Items(
+    //view
+    {:Rectangle overlayBackgroundBox
+      :OrigBoxSize OVERLAY_BOX_WIDTH OVERLAY_BOX_HEIGHT
+      :OrigPosition [SCREEN_WIDTH - OVERLAY_BOX_WIDTH] [SCREEN_HEIGHT - OVERLAY_BOX_HEIGHT]
+      :OrigRefFillColour OVERLAY_BOX_COLOR
+    }
+
+    {:Text prompt
+      :OrigContent "To open extra content press"
+      :OrigBoxSize [OVERLAY_BOX_WIDTH - 2 * OVERLAY_BOX_PADDING] [OVERLAY_BOX_HEIGHT - 2 * OVERLAY_BOX_PADDING]
+      :OrigPosition [SCREEN_WIDTH - OVERLAY_BOX_WIDTH + OVERLAY_BOX_PADDING] [SCREEN_HEIGHT - OVERLAY_BOX_HEIGHT + OVERLAY_BOX_PADDING]
+      :BackgroundColour OVERLAY_BOX_COLOR
+      :HJustification centre
+    }
+
+    {:Text promptButtonName
+      :OrigContent "BLUE button."
+      :OrigBoxSize [OVERLAY_BOX_WIDTH - 2 * OVERLAY_BOX_PADDING] [OVERLAY_BOX_HEIGHT - 2 * OVERLAY_BOX_PADDING - 30]
+      :OrigPosition [SCREEN_WIDTH - OVERLAY_BOX_WIDTH + OVERLAY_BOX_PADDING] [SCREEN_HEIGHT - OVERLAY_BOX_HEIGHT + OVERLAY_BOX_PADDING + 30]
+      :BackgroundColour OVERLAY_BOX_COLOR
+      :TextColour BLUE
+      :HJustification centre
+    }
+
+    {:Link linkBlueKey
+      :EventSource    0
+      :EventType      UserInput
+      :EventData KeyBlue
+      :LinkEffect(
+        :TransitionTo(("~/splash_screen.asn" 0))
+      )
+    }
+  )
+
+  :InputEventReg 4
+  :SceneCS SCREEN_WIDTH SCREEN_HEIGHT
+}

@@ -1,0 +1,72 @@
+version: '3.9'
+
+services:
+  postgresdb:
+    image: postgres
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - POSTGRES_USER=$POSTGRESDB_USER
+      - POSTGRES_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
+      - PGPASSWORD=$POSTGRESDB_ROOT_PASSWORD
+      - POSTGRES_DB=$POSTGRESDB_DATABASE
+    ports:
+      - $POSTGRESDB_LOCAL_PORT:$POSTGRESDB_DOCKER_PORT
+    volumes:
+      - db:/var/lib/postgres
+
+  signer:
+    build:
+      context: signer
+    restart: always
+    ports: 
+      - $SIGNER_LOCAL_PORT:$SIGNER_DOCKER_PORT
+    env_file: ./.env
+    environment:
+      - PORT=$SIGNER_DOCKER_PORT
+      - FLAG=$FLAG
+    command: gunicorn -w 4 -t 60 -b 0.0.0.0:$SIGNER_DOCKER_PORT app:app
+
+  proxy:
+    depends_on:
+      - backend
+    build:
+      context: proxy
+    restart: always
+    ports: 
+      - $PROXY_LOCAL_PORT:$PROXY_DOCKER_PORT
+    env_file: ./.env
+    environment:
+      - PORT=$PROXY_DOCKER_PORT
+      - REV_PROXY_SECRET=$REV_PROXY_SECRET
+      - BACKEND_ADDR=backend:$BACKEND_DOCKER_PORT
+    
+  backend:
+    depends_on:
+      - postgresdb
+      - signer
+    build:
+      context: backend
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $BACKEND_LOCAL_PORT:$BACKEND_DOCKER_PORT
+    environment:
+      - PORT=$BACKEND_DOCKER_PORT
+      - CORS=$BACKEND_CORS
+
+      - REV_PROXY_SECRET:$REV_PROXY_SECRET
+      - JWT_SECRET:$JWT_SECRET
+
+      - SIGNER_HOST=signer
+      - SIGNER_PORT=$SIGNER_DOCKER_PORT
+
+      - DB_HOST=postgresdb
+      - DB_PORT=$POSTGRESDB_DOCKER_PORT
+      - DB_USER=$POSTGRESDB_USER
+      - DB_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
+      - DB_NAME=$POSTGRESDB_DATABASE
+    command: pm2-runtime start -i 4 /home/app/build/index.js
+
+volumes: 
+  db:

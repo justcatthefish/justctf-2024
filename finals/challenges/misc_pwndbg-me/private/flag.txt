@@ -1,0 +1,1 @@
+justCTF{Check now :) Pwndbg also provides releases for RISC-V and ARM32}

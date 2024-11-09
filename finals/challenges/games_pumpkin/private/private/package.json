@@ -1,0 +1,20 @@
+{
+	"name": "instancer",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "tomek7667",
+	"license": "MIT",
+	"type": "module",
+	"scripts": {
+		"start": "node instancer.js",
+		"start:watch": "nodemon instancer.js"
+	},
+	"dependencies": {
+		"ejs": "^3.1.9",
+		"express": "^4.18.2",
+		"random-words": "^2.0.0"
+	},
+	"devDependencies": {
+		"nodemon": "^3.0.2"
+	}
+}

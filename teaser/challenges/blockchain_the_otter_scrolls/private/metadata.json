@@ -1,0 +1,10 @@
+{
+    "name": "The Otter Scrolls",
+    "identifier": "tos",
+    "category": [ "blockchain" ],
+    "difficulty": "easy",
+    "flag": [
+        "justCTF{Th4t_sp3ll_looks_d4ngerous...keep_y0ur_distance}"
+    ],
+    "version": 5
+}

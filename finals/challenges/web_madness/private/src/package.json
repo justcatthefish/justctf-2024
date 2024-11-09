@@ -1,0 +1,12 @@
+{
+  "name": "web_madness",
+  "version": "1.0.0",
+  "description": "justCTF 2024 Finals",
+  "author": "terjanq",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.21.0",
+    "html-minifier": "^4.0.0",
+    "puppeteer": "^23.4.0"
+  }
+}

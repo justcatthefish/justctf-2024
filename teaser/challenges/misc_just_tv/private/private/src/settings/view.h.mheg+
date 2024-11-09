@@ -1,0 +1,20 @@
+{:IntegerConst SCREEN_WIDTH :ConstValue 720}
+{:IntegerConst SCREEN_HEIGHT :ConstValue 576}
+
+{:IntegerConst VIEW_BOX_SIZE :ConstValue 500}
+
+{:IntegerConst OVERLAY_BOX_WIDTH :ConstValue 300}
+{:IntegerConst OVERLAY_BOX_HEIGHT :ConstValue 110}
+{:IntegerConst OVERLAY_BOX_PADDING :ConstValue 10}
+
+{:OctetStringConst BACKGROUND_COLOR :ConstValue '=2A=2A=2A=00'}
+{:OctetStringConst VIEW_BOX_COLOR :ConstValue '=55=55=55=00'}
+
+{:OctetStringConst OVERLAY_BOX_COLOR :ConstValue '=55=55=55=00'}
+
+{:OctetStringConst WHITE :ConstValue '=FF=FF=FF=00'}
+{:OctetStringConst BLACK :ConstValue '=00=00=00=00'}
+{:OctetStringConst LIGHT_GRAY :ConstValue '=2A=2A=2A=00'}
+{:OctetStringConst BLUE :ConstValue '=00=00=FF=00'}
+{:OctetStringConst RED :ConstValue '=FF=00=00=00'}
+{:OctetStringConst GREEN :ConstValue '=00=FF=00=00'}

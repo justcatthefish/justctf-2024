@@ -1,0 +1,8 @@
+{
+    "name": "Duality",
+    "identifier": "duality",
+    "category": ["crypto"],
+    "difficulty": "medium",
+    "flag": "justCTF{4bcd3fgh1jkl2mno3pqr4stuv5wxyz}",
+    "version": 2
+}

@@ -1,0 +1,13 @@
+version: '3'
+services:
+  minecraft-death:
+    hostname: "${UID:-death}"
+    networks:
+      - minecraft-network 
+    build: .
+    restart: unless-stopped
+  
+networks:
+  minecraft-network:
+    name: minecraft-network
+    external: true

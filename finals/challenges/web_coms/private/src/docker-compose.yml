@@ -1,0 +1,14 @@
+services:
+  ship:
+   build: ship/
+   restart: always
+   environment:
+      - FLAG=${FLAG:-justCTF{fake-flag}}
+
+  coms:
+    build: coms/
+    restart: always
+    ports:
+      - 80:3000
+    depends_on:
+      - ship

@@ -1,0 +1,8 @@
+{
+       "name": "securiotee",
+       "identifier": "pwn-securiotee",
+       "category": ["pwn"],
+       "flag": ["justCTF{7h3_S_1n_IoT_5tands_f0r_53cur17y_lol}"],
+       "difficulty": "easy",
+       "version": 2
+}

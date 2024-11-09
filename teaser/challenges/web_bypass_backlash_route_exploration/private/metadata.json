@@ -1,0 +1,10 @@
+{
+    "identifier": "web_bbre",
+    "name": "Bypass Backlash: Route Exploration",
+    "category": "web",
+    "difficulty": "medium",
+    "flag": [
+        "justCTF{you_acceler4ted_th3_flag}"
+    ],
+    "version": 2
+}

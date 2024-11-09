@@ -1,0 +1,129 @@
+let
+ type any = {any : int}
+ var buffer := " " /*getchar ()*/
+
+ var msg1 := "justWTF{dGhpcyBpcyBub3QgYSByZWFsIGZsYWc=}"
+ var msg2 := "fgbc ybbxvat ng gur fgevatf, gurfr nera'g rira hfrq ol gur pbqr :B"
+
+/* PRNG in Tiger language */
+
+/* Global seed variable */
+var seed := 1337
+
+/* Constants for the LCG algorithm */
+  var a := 1103515245
+  var c := 12345
+  var m := 2147483647 /* 2^31-1 */
+
+/* Function to set the seed */
+function times_(s: int) =
+  (seed := s)
+
+/* Function to generate a new random number */
+function next() : int =
+  (seed := (a * seed + c);
+   seed)
+
+
+  function times(x : int, y:int) : int = (
+    let var ans: int := 0
+    in (for i:= 1 to y do (ans:= ans+x));
+    ans
+  end)
+
+  function power(x : int, y:int) : int = (
+    let var ans: int := 1
+    in (for i:= 1 to y do (ans:= times(ans,x)));
+    ans
+  end)
+
+
+ function readint (any : any) : int =
+   let var i := 0
+       function isdigit (s : string) : int =
+         ord ("0") <= ord (s) & ord (s) <= ord ("9")
+       function skipto () =
+          while buffer = " " | buffer = "\n"
+          do buffer := getchar ()
+   in skipto ();
+      any.any := isdigit (buffer);
+      while isdigit (buffer)
+        do (i := i * 10 + ord (buffer) - ord ("0");
+            buffer := getchar ());
+      i
+   end
+
+ type list = {first : int, rest : list}
+
+ function readlist () : list =
+   let var any := any{any=0}
+       var i := readint (any)
+   in if any.any
+        then list{first=i,rest=readlist ()}
+        else nil
+   end
+
+ function merge (a : list, b : list) : list =
+   if a = nil then b
+   else if b = nil then a
+   else if a.first < b.first
+      then list {first = a.first, rest = merge (a.rest, b)}
+      else list {first = b.first, rest = merge (a, b.rest)}
+
+ function listlength(a : list) : int =
+   if a = nil then 0
+   else 1 + listlength (a.rest)
+
+ function printint (i : int) =
+   let function f (i : int) =
+        if i > 0
+	then (f (i/10); print (chr (i-i/10*10+ord ("0"))))
+   in if i < 0 then (print ("-"); f (-i))
+      else if i>0 then f (i)
+      else print ("0")
+   end
+
+ type intArray = array of int
+ var row := intArray [ 100 ] of 0
+
+ function issolution(l: list, i: int) : int =
+   if i >= 100 then 1
+   else if l = nil then 0
+   else if l.first <> row[i] then 0
+   else issolution(l.rest, i+1)
+
+ function printlist (l : list) =
+   if l = nil then print ("\n")
+   else (printint (l.first); print (" "); printlist (l.rest))
+
+  var list1 := list  {first = 0, rest = nil}
+  var list2 := list  {first = 0, rest = nil}
+
+ function solve() = (
+  flush();
+  print ("First key:\n");
+  flush();
+  list1 := readlist ();
+  print ("Second key:\n");
+  flush();
+  list2 := (buffer := getchar (); readlist ());
+  if (listlength (list1) < 25) | (listlength (list2) < 25) then print ("Too short!\n") else (
+    print ("Let's see...\n");
+    times_(list2.first);
+    row[0] = list2.first;
+    for x:= 1 to 99 do (row[x] := next();());
+    if issolution (merge (list1,list2), 0) = 1 then print ("Good! flag is FLAG_PLACEHOLDER_HERE_GOES_THE_FLAG\n") else print ("Better luck next time\n");
+    flush()
+  ))
+
+  var msg3 := "Good! flag is "
+
+  function confuse() = (
+    /* nobody calls this, dead code just to be confusing */
+    print(msg3);
+    print("FLAG_PLACEHOLDER_HERE_GOES_THE_FLAG\n");
+    flush()
+  )
+
+in solve(); 0
+end

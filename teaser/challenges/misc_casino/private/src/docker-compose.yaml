@@ -1,0 +1,9 @@
+version: '3'
+services:
+  casino:
+    build: .
+    ports:
+      - 80:3000
+    restart: unless-stopped
+    environment:
+      - FLAG=${FLAG:-justCTF{fake-flag}}

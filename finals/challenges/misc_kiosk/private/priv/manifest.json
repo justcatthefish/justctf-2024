@@ -1,0 +1,11 @@
+{
+  "name": "NFC Flag Market",
+  "short_name": "NFC-FM",
+  "icons": [],
+  "display_override": [ "window-controls-overlay" ],
+  "lang": "en-US",
+  "start_url": "/index.html",
+  "display": "fullscreen",
+  "background_color": "black",
+  "theme_color": "black"
+}

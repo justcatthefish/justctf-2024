@@ -1,0 +1,14 @@
+defMacro setupViewBox
+{
+  {:Rectangle backgroundBox
+    :OrigBoxSize SCREEN_WIDTH SCREEN_HEIGHT
+    :OrigPosition 0 0
+    :OrigRefFillColour BACKGROUND_COLOR
+  }
+
+  {:Rectangle viewBox
+    :OrigBoxSize VIEW_BOX_SIZE VIEW_BOX_SIZE
+    :OrigPosition [(SCREEN_WIDTH - VIEW_BOX_SIZE)/2] [(SCREEN_HEIGHT - VIEW_BOX_SIZE)/2]
+    :OrigRefFillColour VIEW_BOX_COLOR
+  }
+} endMacro

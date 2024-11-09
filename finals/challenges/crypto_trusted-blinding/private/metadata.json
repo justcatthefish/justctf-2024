@@ -1,0 +1,10 @@
+{
+    "identifier": "crypto_trusted-blinding",
+    "name": "Trusted Blinding",
+    "category": ["crypto", "web"],
+    "difficulty": "hard",
+    "flag": [
+        "justCTF{s0m4nybugsb3pr0udyousolv3d1t}"
+    ],
+    "version": 1
+}

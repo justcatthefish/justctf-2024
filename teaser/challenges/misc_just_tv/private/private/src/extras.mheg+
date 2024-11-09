@@ -1,0 +1,585 @@
+import(settings/view.h.mheg+)
+import(common/viewbox.h.mheg+)
+import(common/operations.h.mheg+)
+
+{:Scene("~/extras.asn" 0)
+  :Items(
+      insertMacro(operationsInit)
+
+      //constants
+      {:OStringVar KEYBOARD_SCHEME_LOWER :OrigValue "1234567890qwertyuiopasdfghjkl{[zxcvbnm_."}
+      {:OStringVar KEYBOARD_SCHEME_UPPER :OrigValue "!@#$%^&*+=QWERTYUIOPASDFGHJKL}]ZXCVBNM-."}
+
+      {:IntegerConst KEYBORD_V_OFFSET :ConstValue 200}
+
+      {:IntegerConst KEYBOARD_WIDTH :ConstValue 10}
+      {:IntegerConst KEYBOARD_HEIGHT :ConstValue 4}
+
+      {:IntegerConst LETTER_BOX_SIZE :ConstValue 35}
+      {:IntegerConst LETTER_BOX_GAP :ConstValue 10}
+
+      {:IntegerConst INPUT_BOX_WIDTH :ConstValue 400}
+      {:IntegerConst INPUT_BOX_V_OFFSET :ConstValue 100}
+
+      {:IntegerConst CONFIRM_BOX_WIDTH :ConstValue 200}
+      {:IntegerConst CONFIRM_BOX_V_OFFSET :ConstValue 400}
+
+      {:IntegerVar LOWER_CASE :OrigValue 0}
+      {:IntegerVar UPPER_CASE :OrigValue 1}
+
+      {:OStringVar KEYBOARD_CASE_UP_KEY :OrigValue "["}
+      {:OStringVar KEYBOARD_CASE_DOWN_KEY :OrigValue "]"}
+
+      {:OStringVar KEYBOARD_BACKSPACE_KEY :OrigValue "."}
+
+      {:OStringVar KEYBOARD_CASE_UP_SYMBOL :OrigValue "aA"}
+      {:OStringVar KEYBOARD_CASE_DOWN_SYMBOL :OrigValue 'Aa'}
+
+      {:OStringVar KEYBOARD_BACKSPACE_SYMBOL :OrigValue '=c2=ab'}
+
+      {:OStringVar ALPHABET :OrigValue "1234567890qwertyuiopasdfghjkl{zxcvbnm_!@#$%^&*+=QWERTYUIOPASDFGHJKL}ZXCVBNM-"}
+      {:OStringVar ALPHABET_MAPPING :OrigValue "0000000000000100000100000011000010000001010000110000011100010000001001000101000010110001100000110100011100001111001000000100010010010001001100101000010101001011000101110011000001100100110100011011001110000111010011110001111101000000100001010001001000110100100010010101001100100111010100001010010101010010101101011000101101010111001011110110000011000101100100110011011010001101010110110011011101110000111001011101001110110111100011110101111100111111100000010000011000010100001110001001000101100011010001111001000100100110010101001011"}
+
+      {:IntegerConst KEY_BYTE_SIZE :ConstValue 7}
+      {:IntegerConst KEYSTREM_SYMBOL_SIZE :ConstValue 68}
+
+      {:OStringVar KEYSTREAM_BYTES :OrigValue "00011001101110001010100100010001100100011001000011010001110101001111011011000100100111100100001011000010111001110101101110101100100101111010001100011110010111000010010100111100111101111011110100111010010110011010111110110111010111100100011110011100000010010100110100000110101011110101001010000010101000101001001010010111101110111110011001010100010000000110100001110100101111110100110011011100100000011011010101011110010010111111011101001111000100001101101001011000000001111110"}
+      {:OStringVar TARGET_BYTES :OrigValue "11010011010000101111101110101001011001101100101000111101101110101101010000010111101110000110100001000111101100000001110010010000000001011111001101111110011110111100111000111111101000110110010111100111110001111010110100110111000001001111010001100110111000101010010001000110010001100100001101000111010100111101101100010010011110010000101100001011100111010110111010110010010111101000110001111001011100001001010011110011110111101111010011101001011001101011111011011101011110010001"}
+
+      //variables
+      {:OStringVar keyboardInputString :OrigValue ""}
+
+      {:IntegerVar keyboardCurrentKey :OrigValue 1}
+      {:IntegerVar keyboardCase :OrigValue 0}
+
+      {:IntegerVar keyboardFirstLetterObjectID :OrigValue 0}
+      {:OStringVar groupID :OrigValue ""}
+
+      {:IntegerVar keyboardLetterObjectID :OrigValue 0}
+      {:ObjectRefVar keyboardObjectReference :OrigValue :ObjectRef keyboardObjectReference}
+      {:OStringVar letter :OrigValue ""}
+
+      {:IntegerVar tempLength1 :OrigValue 0}
+      {:IntegerVar tempLength2 :OrigValue 0}
+      {:OStringVar tempString1 :OrigValue ""}
+      {:OStringVar tempString2 :OrigValue ""}
+
+      {:OStringVar shiftedKeystream :OrigValue ""}
+
+      {:OStringVar xorInput1 :OrigValue ""}
+      {:OStringVar xorInput2 :OrigValue ""}
+      {:OStringVar xorOutput :OrigValue ""}
+
+      {:OStringVar inputStream :OrigValue ""}
+      {:OStringVar xorredStream :OrigValue ""}
+
+      //view
+      insertMacro(setupViewBox)
+
+      foreach rowID (1 .. 4) {
+        foreach colID (1 .. 10) {
+          {:Text keyboard<rowID>_<colID>
+            :OrigContent ""
+            :OrigBoxSize [LETTER_BOX_SIZE] [LETTER_BOX_SIZE]
+            :OrigPosition [(SCREEN_WIDTH - VIEW_BOX_SIZE) / 2 + (VIEW_BOX_SIZE - KEYBOARD_WIDTH * (LETTER_BOX_GAP + LETTER_BOX_SIZE) + LETTER_BOX_GAP)/2 + (<colID> - 1) * (LETTER_BOX_SIZE + LETTER_BOX_GAP)] [(SCREEN_HEIGHT - VIEW_BOX_SIZE) / 2 + <rowID> * LETTER_BOX_GAP + (<rowID> - 1) * LETTER_BOX_SIZE + KEYBORD_V_OFFSET]
+            :HJustification centre
+            :VJustification centre
+          }
+        } endfor
+      } endfor
+
+      {:Text keyboardConfirm
+        :OrigContent "Confirm"
+        :OrigBoxSize [CONFIRM_BOX_WIDTH] [LETTER_BOX_SIZE]
+        :OrigPosition [(SCREEN_WIDTH - VIEW_BOX_SIZE) / 2 + (VIEW_BOX_SIZE - CONFIRM_BOX_WIDTH )/2] [(SCREEN_HEIGHT - VIEW_BOX_SIZE) / 2 + CONFIRM_BOX_V_OFFSET]
+        :HJustification centre
+        :VJustification centre
+      }
+
+
+      {:Text keyboardInput
+        :OrigContent ""
+        :OrigBoxSize [INPUT_BOX_WIDTH] [LETTER_BOX_SIZE]
+        :OrigPosition [(SCREEN_WIDTH - VIEW_BOX_SIZE) / 2 + (VIEW_BOX_SIZE - INPUT_BOX_WIDTH )/2] [(SCREEN_HEIGHT - VIEW_BOX_SIZE) / 2 + INPUT_BOX_V_OFFSET]
+        :HJustification centre
+        :VJustification centre
+      }
+
+      {:Link linkRedrawKeyboard
+        :InitiallyActive  false
+        :EventType        IsRunning
+        :EventSource      linkRedrawKeyboard
+        :LinkEffect(
+          foreach rowID (1 .. 4) {
+            foreach colID (1 .. 10) {
+              keyboardLetterObjectID.SetVariable(:IndirectRef keyboardFirstLetterObjectID)
+              keyboardLetterObjectID.Add([(<rowID> - 1) * KEYBOARD_WIDTH + <colID> - 1])
+              GetObjectRef.Call(
+                residentPrgResult
+                "~/extras.asn"
+                :IndirectRef keyboardLetterObjectID
+                :IndirectRef keyboardObjectReference
+              )
+
+              :If(LOWER_CASE == :IndirectRef keyboardCase)
+              {
+                GetSubString.Call(
+                    residentPrgResult
+                    :IndirectRef KEYBOARD_SCHEME_LOWER
+                    [(<rowID> - 1) * KEYBOARD_WIDTH + <colID>]
+                    [(<rowID> - 1) * KEYBOARD_WIDTH + <colID>]
+                    :IndirectRef letter
+                )
+              }
+              :Else
+              {
+                GetSubString.Call(
+                    residentPrgResult
+                    :IndirectRef KEYBOARD_SCHEME_UPPER
+                    [(<rowID> - 1) * KEYBOARD_WIDTH + <colID>]
+                    [(<rowID> - 1) * KEYBOARD_WIDTH + <colID>]
+                    :IndirectRef letter
+                )
+              }
+
+              :If(KEYBOARD_CASE_UP_KEY == :IndirectRef letter)
+              {
+                :SetData(:IndirectRef keyboardObjectReference :IndirectRef KEYBOARD_CASE_UP_SYMBOL)
+              }
+              :Else
+              {
+                :If(KEYBOARD_BACKSPACE_KEY == :IndirectRef letter)
+                {
+                  :SetData(:IndirectRef keyboardObjectReference :IndirectRef KEYBOARD_BACKSPACE_SYMBOL)
+                }
+                :Else
+                {
+                  :If(KEYBOARD_CASE_DOWN_KEY == :IndirectRef letter)
+                  {
+                    :SetData(:IndirectRef keyboardObjectReference :IndirectRef KEYBOARD_CASE_DOWN_SYMBOL)
+                  }
+                  :Else
+                  {
+                    :SetData(:IndirectRef keyboardObjectReference :IndirectRef letter)
+                  }
+                }
+              }
+
+              :If(keyboardCurrentKey == [(<rowID> - 1) * KEYBOARD_WIDTH + <colID>])
+              {
+                :SetBackgroundColour(:IndirectRef keyboardObjectReference BLUE)
+                :SetTextColour(:IndirectRef keyboardObjectReference WHITE)
+              }
+              :Else
+              {
+                :SetBackgroundColour(:IndirectRef keyboardObjectReference WHITE)
+                :SetTextColour(:IndirectRef keyboardObjectReference BLACK)
+              }
+
+              :If(keyboardCurrentKey == [KEYBOARD_HEIGHT * KEYBOARD_WIDTH + 1])
+              {
+                :SetBackgroundColour(keyboardConfirm BLUE)
+                :SetTextColour(keyboardConfirm WHITE)
+              }
+              :Else
+              {
+                :SetBackgroundColour(keyboardConfirm WHITE)
+                :SetTextColour(keyboardConfirm BLACK)
+              }
+            } endFor
+          } endFor
+          linkRedrawKeyboard.Deactivate()
+        )
+      }
+
+      {:Link linkKeyboardUpdate
+        :InitiallyActive  false
+        :EventType        IsRunning
+        :EventSource      linkKeyboardUpdate
+        :LinkEffect(
+          :If(keyboardCurrentKey <= 0)
+          {
+            keyboardCurrentKey.SetVariable(1)
+          }
+
+          :If(keyboardCurrentKey >= [KEYBOARD_WIDTH * KEYBOARD_HEIGHT + 1])
+          {
+            keyboardCurrentKey.SetVariable([KEYBOARD_WIDTH * KEYBOARD_HEIGHT + 1])
+          }
+
+          linkRedrawKeyboard.Activate()
+          linkKeyboardUpdate.Deactivate()
+        )
+      }
+
+      {:Link linkCheckOutput
+        :InitiallyActive  false
+        :EventType        IsRunning
+        :EventSource      linkCheckOutput
+        :LinkEffect(
+          linkCheckOutput.Deactivate()
+
+          //shift keystream
+          shiftedKeystream.SetVariable(:IndirectRef KEYSTREAM_BYTES)
+
+          GetStringLength.Call(
+              residentPrgResult
+              :IndirectRef keyboardInputString
+              :IndirectRef tempLength1
+          )
+
+          tempLength1.Multiply(KEY_BYTE_SIZE)
+
+          GetSubString.Call(
+              residentPrgResult
+              :IndirectRef KEYSTREAM_BYTES
+              0
+              :IndirectRef tempLength1
+              :IndirectRef tempString1
+          )
+
+          GetStringLength.Call(
+              residentPrgResult
+              :IndirectRef KEYSTREAM_BYTES
+              :IndirectRef tempLength2
+          )
+
+          tempLength1.Add(1)
+
+          GetSubString.Call(
+              residentPrgResult
+              :IndirectRef KEYSTREAM_BYTES
+              :IndirectRef tempLength1
+              :IndirectRef tempLength2
+              :IndirectRef tempString2
+          )
+
+          shiftedKeystream.SetVariable("")
+          shiftedKeystream.Append(:IndirectRef tempString2)
+          shiftedKeystream.Append(:IndirectRef tempString1)
+
+          //encode input
+          inputStream.SetVariable("")
+
+          foreach letterIndex (1 .. KEYSTREM_SYMBOL_SIZE)
+          {
+            GetStringLength.Call(
+                residentPrgResult
+                :IndirectRef keyboardInputString
+                :IndirectRef tempLength1
+            )
+
+            :If(tempLength1 >= [<letterIndex>])
+            {
+              letter.SetVariable("")
+              GetSubString.Call(
+                  residentPrgResult
+                  :IndirectRef keyboardInputString
+                  [<letterIndex>]
+                  [<letterIndex>]
+                  :IndirectRef letter
+              )
+
+              SearchSubString.Call(
+                residentPrgResult
+                :IndirectRef ALPHABET
+                1
+                :IndirectRef letter
+                :IndirectRef tempLength2
+              )
+
+              tempLength1.SetVariable(:IndirectRef tempLength2)
+              tempLength1.Subtract(1)
+              tempLength1.Multiply(KEY_BYTE_SIZE)
+              tempLength1.Add(1)
+
+              tempLength2.Multiply(KEY_BYTE_SIZE)
+
+              GetSubString.Call(
+                residentPrgResult
+                :IndirectRef ALPHABET_MAPPING
+                :IndirectRef tempLength1
+                :IndirectRef tempLength2
+                :IndirectRef tempString1
+              )
+
+              inputStream.Append(:IndirectRef tempString1)
+            }
+          } endFor
+
+          //xor keystream and input
+
+          xorredStream.SetVariable("")
+          foreach letterIndex (1 .. KEYSTREM_SYMBOL_SIZE)
+          {
+            foreach bitIndex (1 .. KEY_BYTE_SIZE)
+            {
+              GetStringLength.Call(
+                  residentPrgResult
+                  :IndirectRef inputStream
+                  :IndirectRef tempLength1
+              )
+
+              :If(tempLength1 >= [(<letterIndex> - 1) * KEY_BYTE_SIZE + <bitIndex>])
+              {
+                xorInput1.SetVariable("")
+                xorInput2.SetVariable("")
+                GetSubString.Call(
+                    residentPrgResult
+                    :IndirectRef inputStream
+                    [(<letterIndex> - 1) * KEY_BYTE_SIZE + <bitIndex>]
+                    [(<letterIndex> - 1) * KEY_BYTE_SIZE + <bitIndex>]
+                    :IndirectRef xorInput1
+                )
+
+                GetSubString.Call(
+                    residentPrgResult
+                    :IndirectRef shiftedKeystream
+                    [(<letterIndex> - 1) * KEY_BYTE_SIZE + <bitIndex>]
+                    [(<letterIndex> - 1) * KEY_BYTE_SIZE + <bitIndex>]
+                    :IndirectRef xorInput2
+                )
+
+                :If(xorInput1 == :IndirectRef xorInput2)
+                {
+                  xorredStream.Append("0")
+                }
+                :Else
+                {
+                  xorredStream.Append("1")
+                }
+              }
+              :Else
+              {
+                xorInput1.SetVariable("")
+                GetSubString.Call(
+                    residentPrgResult
+                    :IndirectRef shiftedKeystream
+                    [(<letterIndex> - 1) * KEY_BYTE_SIZE + <bitIndex>]
+                    [(<letterIndex> - 1) * KEY_BYTE_SIZE + <bitIndex>]
+                    :IndirectRef xorInput1
+                )
+                xorredStream.Append(:IndirectRef xorInput1)
+              }
+            } endFor
+          } endFor
+
+          //verify
+          :If(xorredStream == :IndirectRef TARGET_BYTES)
+          {
+            :SetBackgroundColour(keyboardInput GREEN)
+            :SetTextColour(keyboardInput WHITE)
+          }
+          :Else
+          {
+            :SetBackgroundColour(keyboardInput RED)
+            :SetTextColour(keyboardInput WHITE)
+          }
+        )
+      }
+
+      {:Link linkResetInputColor
+        :InitiallyActive  false
+        :EventType        IsRunning
+        :EventSource      linkResetInputColor
+        :LinkEffect(
+          linkResetInputColor.Deactivate()
+          :SetBackgroundColour(keyboardInput WHITE)
+          :SetTextColour(keyboardInput BLACK)
+        )
+      }
+
+      {:Link linkAppendLetter
+        :InitiallyActive  false
+        :EventType        IsRunning
+        :EventSource      linkAppendLetter
+        :LinkEffect(
+          linkAppendLetter.Deactivate()
+
+          keyboardInputString.Append(:IndirectRef letter)
+
+          keyboardInput.SetData(:IndirectRef keyboardInputString)
+
+          linkResetInputColor.Activate()
+        )
+      }
+
+
+      {:Link linkRemoveLetter
+        :InitiallyActive  false
+        :EventType        IsRunning
+        :EventSource      linkRemoveLetter
+        :LinkEffect(
+          linkRemoveLetter.Deactivate()
+
+          GetStringLength.Call(
+              residentPrgResult
+              :IndirectRef keyboardInputString
+              :IndirectRef tempLength1
+          )
+
+          tempLength1.Subtract(1)
+
+          :If(tempLength1 != -1)
+          {
+            :If(tempLength1 == 0)
+            {
+              keyboardInputString.SetVariable("")
+            }
+            :Else
+            {
+              GetSubString.Call(
+                  residentPrgResult
+                  :IndirectRef keyboardInputString
+                  0
+                  :IndirectRef tempLength1
+                  :IndirectRef tempString1
+              )
+
+              keyboardInputString.SetVariable(:IndirectRef tempString1)
+            }
+
+            keyboardInput.SetData(:IndirectRef keyboardInputString)
+          }
+
+          linkResetInputColor.Activate()
+        )
+      }
+
+      {:Link linkKeyboardPress
+        :InitiallyActive    false
+        :EventType          IsRunning
+        :EventSource        linkKeyboardPress
+        :LinkEffect(
+          linkKeyboardPress.Deactivate()
+          :If(keyboardCurrentKey == [KEYBOARD_WIDTH * KEYBOARD_HEIGHT + 1])
+          {
+            linkCheckOutput.Activate()
+          }
+          :Else
+          {
+            :If(LOWER_CASE == :IndirectRef keyboardCase)
+            {
+              GetSubString.Call(
+                  residentPrgResult
+                  :IndirectRef KEYBOARD_SCHEME_LOWER
+                  :IndirectRef keyboardCurrentKey
+                  :IndirectRef keyboardCurrentKey
+                  :IndirectRef letter
+              )
+            }
+            :Else
+            {
+              GetSubString.Call(
+                  residentPrgResult
+                  :IndirectRef KEYBOARD_SCHEME_UPPER
+                  :IndirectRef keyboardCurrentKey
+                  :IndirectRef keyboardCurrentKey
+                  :IndirectRef letter
+              )
+            }
+
+            :If(KEYBOARD_CASE_UP_KEY == :IndirectRef letter)
+            {
+              keyboardCase.SetVariable(:IndirectRef UPPER_CASE)
+              linkRedrawKeyboard.Activate()
+            }
+            :Else
+            {
+              :If(KEYBOARD_CASE_DOWN_KEY == :IndirectRef letter)
+              {
+                keyboardCase.SetVariable(:IndirectRef LOWER_CASE)
+                linkRedrawKeyboard.Activate()
+              }
+              :Else
+              {
+                :If(KEYBOARD_BACKSPACE_KEY == :IndirectRef letter)
+                {
+                  linkRemoveLetter.Activate()
+                }
+                :Else
+                {
+                  linkAppendLetter.Activate()
+                }
+              }
+            }
+          }
+        )
+      }
+
+      {:Link linkPressUp
+        :EventSource      0
+        :EventType        UserInput
+        :EventData        KeyUp
+        :LinkEffect(
+            keyboardCurrentKey.Subtract(KEYBOARD_WIDTH)
+            linkKeyboardUpdate.Activate()
+        )
+      }
+
+      {:Link linkPressDown
+        :EventSource      0
+        :EventType        UserInput
+        :EventData        KeyDown
+        :LinkEffect(
+            keyboardCurrentKey.Add(KEYBOARD_WIDTH)
+            linkKeyboardUpdate.Activate()
+        )
+      }
+
+      {:Link linkPressRight
+        :EventSource      0
+        :EventType        UserInput
+        :EventData        KeyRight
+        :LinkEffect(
+            keyboardCurrentKey.Add(1)
+            linkKeyboardUpdate.Activate()
+        )
+      }
+
+      {:Link linkPressLeft
+        :EventSource      0
+        :EventType        UserInput
+        :EventData        KeyLeft
+        :LinkEffect(
+            keyboardCurrentKey.Subtract(1)
+            linkKeyboardUpdate.Activate()
+        )
+      }
+
+      {:Link linkPressSelect
+        :EventSource      0
+        :EventType        UserInput
+        :EventData        KeySelect
+        :LinkEffect(
+            linkKeyboardPress.Activate()
+        )
+      }
+
+      {:Link linkStartup
+        :EventSource      linkStartup
+        :EventType        IsRunning
+        :InitiallyActive  True
+        :LinkEffect(
+          CastToStringInt.Call(
+            residentPrgResult
+            :GObjectRef keyboard1_1
+            :IndirectRef groupID
+            :IndirectRef keyboardFirstLetterObjectID
+          )
+          linkRedrawKeyboard.Activate()
+        )
+      }
+
+      {:Link linkPressExit
+        :EventSource      0
+        :EventType        UserInput
+        :EventData        KeyExit
+        :LinkEffect(
+          :TransitionTo(("~/main_menu.asn" 0))
+        )
+      }
+  )
+  :InputEventReg 4
+  :SceneCS 720 576
+}

@@ -1,0 +1,10 @@
+{
+    "identifier": "misc_wow_signal",
+    "name": "wow_signal",
+    "category": ["baby", "misc"],
+    "difficulty": "easy",
+    "flag": [
+        "justCTF{w3_c0m3_1n_p34c3}"
+    ],
+    "version": 1
+}

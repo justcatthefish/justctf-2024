@@ -1,0 +1,19 @@
+version: '2.4'
+
+services:
+  manager:
+    build:
+      context: ./instancer
+      network: host
+    restart: "unless-stopped"
+    devices:
+      - /dev/vsock
+      - /dev/vhost-vsock
+    security_opt:
+      - seccomp=unconfined
+    network_mode: host
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"

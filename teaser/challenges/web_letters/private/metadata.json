@@ -1,0 +1,10 @@
+{
+    "identifier": "letters",
+    "name": "Letters",
+    "category": "web",
+    "difficulty": "hard",
+    "flag": [
+        "justCTF{0_d4ys_al1_d4y_B)}"
+    ],
+    "version": 4
+}

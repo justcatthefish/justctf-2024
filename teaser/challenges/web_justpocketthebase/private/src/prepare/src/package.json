@@ -1,0 +1,11 @@
+{
+	"name": "backend",
+	"version": "1.0.0",
+	"license": "MIT",
+	"scripts": {
+		"start": "node prepare.js"
+	},
+	"dependencies": {
+		"pocketbase": "^0.21.2"
+	}
+}

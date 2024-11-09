@@ -1,0 +1,10 @@
+{
+    "identifier": "misc_nfc_gold",
+    "name": "NFC Gold",
+    "category": ["baby", "misc"],
+    "difficulty": "easy",
+    "flag": [
+        "justCTF{r34l_t1m3_g0ld}"
+    ],
+    "version": 1
+}

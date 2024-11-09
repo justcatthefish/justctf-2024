@@ -1,0 +1,10 @@
+{
+    "identifier": "cursed-protocol",
+    "name": "Cursed Protocol",
+    "category": "re",
+    "difficulty": "medium",
+    "flag": [
+        "justCTF{w0uLd_1t_bE_m0Re_cURs3d_1F_tH3_c0D3_w4s_0bFu5c4T3d?}"
+    ],
+    "version": 3
+}

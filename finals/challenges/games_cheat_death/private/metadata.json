@@ -1,0 +1,10 @@
+{
+    "identifier": "games-death",
+    "name": "Minecraft: Cheat death",
+    "category": "games",
+    "difficulty": "hard",
+    "flag": [
+        "justCTF{her0brin3_is_th4t_y0u???}"
+    ],
+    "version": 3
+}

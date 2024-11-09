@@ -1,0 +1,10 @@
+{
+    "identifier": "another-another-csp",
+    "name": "Another Another CSP",
+    "category": ["web"],
+    "difficulty": "hard",
+    "flag": [
+        "justCTF{N3tw0rk-le3ss-xsle4ks}"
+    ],
+    "version": 5
+}

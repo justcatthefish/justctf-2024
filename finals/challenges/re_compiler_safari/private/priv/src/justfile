@@ -1,0 +1,33 @@
+_default:
+    @just --list
+
+set dotenv-filename := "flag.env"
+
+export DOCKER_DEFAULT_PLATFORM  := "linux/amd64"
+
+# Build challenge binary and copy it (use inside the container)
+compile:
+    cp challenge.tig challenge-flag.tig
+    sed -i "s/FLAG_PLACEHOLDER_HERE_GOES_THE_FLAG/$FLAG/" challenge-flag.tig
+    tiger challenge-flag.tig -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,--strip-all
+    sstrip -z a.out
+    mv a.out challenge
+    rm challenge-flag.tig
+
+# Build challenge binary development container
+container:
+    docker build . --target builder-base -t builder-base-tagged
+
+# Build challenge binary and copy it (outside of the container)
+release: container
+    docker build . --target builder -t builder-tagged
+    docker run -v $PWD:/mnt --rm --entrypoint cp builder-tagged /app/challenge /mnt/challenge
+
+# Run an interactive dev console
+dev: container
+    docker run -v $PWD:/app --rm --entrypoint bash -it builder-base-tagged
+
+# Test challenge solvability
+solve: container
+    docker build . --target runner -t runner-tagged
+    python3 gen.py | docker run --rm -i runner-tagged

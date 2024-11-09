@@ -1,0 +1,10 @@
+{
+    "identifier": "calc",
+    "name": "Calc",
+    "category": ["web"],
+    "difficulty": "medium",
+    "flag": [
+        "justCTF{y0u_4r3_g0od_w1th_y0ur_c4lcu1a7or!}"
+    ],
+    "version": 7
+}

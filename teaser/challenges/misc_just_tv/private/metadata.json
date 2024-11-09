@@ -1,0 +1,8 @@
+{
+    "name": "just TV",
+    "identifier": "just_tv",
+    "category": ["re", "misc"],
+    "flag": ["justCTF{0ld_TV_c4n_b3_InTeR4ctIv3}"],
+    "difficulty": "medium",
+    "version": 1
+}

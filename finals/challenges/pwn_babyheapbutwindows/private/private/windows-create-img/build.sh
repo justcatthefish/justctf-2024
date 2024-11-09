@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+set -ex
+
+PWD=$(pwd)
+SCRIPT_DIR=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+
+OEM_DIRTMP=$(mktemp -d)
+# clone oem
+cp -rf ./oem/* "$OEM_DIRTMP"
+
+## make socat-srv.exe
+## make note.exe
+
+# download some 'deps'
+wget -O "$OEM_DIRTMP"/windbg.msixbundle https://windbg.download.prss.microsoft.com/dbazure/prod/1-2407-24003-0/windbg.msixbundle
+wget -O "$OEM_DIRTMP"/llvm-mingw-20240917-ucrt-x86_64.zip https://github.com/mstorsjo/llvm-mingw/releases/download/20240917/llvm-mingw-20240917-ucrt-x86_64.zip
+
+# make image
+docker run --rm \
+    -v "$OEM_DIRTMP":/oem \
+    -v "$PWD"/storage:/storage \
+    -p 28006:8006 \
+    -p 23389:3389/tcp \
+    -p 23389:3389/udp \
+    --device=/dev/kvm \
+    --cap-add NET_ADMIN \
+    --stop-timeout 120 \
+    dockurr/windows@sha256:9490bcb2463c666a3c0b8497f97a9ab28186e67ff63614e510ecfcab96889a98
+
+# cleanup
+rm -rf "$OEM_DIRTMP" || true
+
+tar cSvf windows_vm_sparse.tar ./storage

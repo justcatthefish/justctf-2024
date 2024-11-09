@@ -1,0 +1,215 @@
+import(settings/view.h.mheg+)
+import(common/viewbox.h.mheg+)
+import(common/operations.h.mheg+)
+
+{:Scene("~/main_menu.asn" 0)
+  :Items(
+    insertMacro(operationsInit)
+
+    {:IntegerConst VIEW_BOX_PADDING_TOP :ConstValue 150}
+    {:IntegerConst SMALL_LOGO_SIZE :ConstValue 150}
+
+    {:IntegerConst ROW_HEIGHT :ConstValue 50}
+    {:IntegerConst ROW_MARGIN_TOP :ConstValue 30}
+
+    {:IntegerConst ROW_COUNT :ConstValue 3}
+
+
+    //variables
+    {:IntegerVar rowStartObjectID :OrigValue 0}
+
+    {:IntegerVar selectedRow :OrigValue 0}
+
+    {:IntegerVar rowObjectID :OrigValue 0}
+    {:IntegerVar rowID :OrigValue 0}
+    {:ObjectRefVar rowObjectReference :OrigValue :ObjectRef rowObjectReference}
+
+    {:OStringVar groupID :OrigValue ""}
+
+    //view
+    insertMacro(setupViewBox)
+
+    {:Bitmap small_logo
+			:CHook 4
+			:OrigContent :ContentRef ("/img/small_cat.png")
+			:OrigBoxSize SMALL_LOGO_SIZE SMALL_LOGO_SIZE
+			:OrigPosition [(SCREEN_WIDTH - SMALL_LOGO_SIZE) / 2] [(SCREEN_HEIGHT - VIEW_BOX_SIZE) / 2]
+		}
+
+    {:Text clock
+      :OrigContent    "Clock"
+      :OrigBoxSize    [VIEW_BOX_SIZE / 10 * 6] ROW_HEIGHT
+      :OrigPosition   [(SCREEN_WIDTH - VIEW_BOX_SIZE) / 2 + VIEW_BOX_SIZE / 10 * 2] [(SCREEN_HEIGHT - VIEW_BOX_SIZE) / 2 + ROW_MARGIN_TOP + VIEW_BOX_PADDING_TOP]
+      :HJustification centre
+      :VJustification centre
+    }
+
+    {:Text calculator
+      :OrigContent    "Weather"
+      :OrigBoxSize    [VIEW_BOX_SIZE / 10 * 6] ROW_HEIGHT
+      :OrigPosition   [(SCREEN_WIDTH - VIEW_BOX_SIZE) / 2 + VIEW_BOX_SIZE / 10 * 2] [(SCREEN_HEIGHT - VIEW_BOX_SIZE) / 2 + ROW_MARGIN_TOP * 2 + ROW_HEIGHT + VIEW_BOX_PADDING_TOP]
+      :HJustification centre
+      :VJustification centre
+    }
+
+    {:Text extraContent
+      :OrigContent    "Extras"
+      :OrigBoxSize    [VIEW_BOX_SIZE / 10 * 6] ROW_HEIGHT
+      :OrigPosition   [(SCREEN_WIDTH - VIEW_BOX_SIZE) / 2 + VIEW_BOX_SIZE / 10 * 2] [(SCREEN_HEIGHT - VIEW_BOX_SIZE) / 2 + ROW_MARGIN_TOP * 4 + ROW_HEIGHT * 3 + VIEW_BOX_PADDING_TOP]
+      :HJustification centre
+      :VJustification centre
+    }
+
+    {:Link linkUpdateSelectedRow
+        :InitiallyActive    false
+        :EventType          IsRunning
+        :EventSource        linkUpdateSelectedRow
+        :LinkEffect(
+          linkUpdateSelectedRow.Deactivate()
+          rowID.SetVariable(0)
+          rowObjectID.SetVariable(:IndirectRef rowStartObjectID)
+          linkUpdateSelectedRowIterate.Activate()
+          :TestVariable(rowID 1 ROW_COUNT)
+        )
+    }
+
+    {:Link linkUpdateSelectedRowIterate
+      :InitiallyActive      false
+			:EventSource          rowID
+      :EventType            TestEvent
+      :EventData            false
+      :LinkEffect(
+        GetObjectRef.Call(
+          residentPrgResult
+          "~/main_menu.asn"
+          :IndirectRef rowObjectID
+          :IndirectRef rowObjectReference
+        )
+        linkUpdateSelectedRowIterate.Deactivate()
+
+        :If(rowID == :IndirectRef selectedRow)
+        {
+          :SetBackgroundColour(:IndirectRef rowObjectReference BLUE)
+          :SetTextColour(:IndirectRef rowObjectReference WHITE)
+        }
+        :Else
+        {
+          :SetBackgroundColour(:IndirectRef rowObjectReference WHITE)
+          :SetTextColour(:IndirectRef rowObjectReference BLACK)
+        }
+        rowObjectID.Add(1)
+        rowID.Add(1)
+        linkUpdateSelectedRowIterate.Activate()
+
+        :TestVariable(rowID 1 ROW_COUNT)
+        linkUpdateSelectedRowIterate.Deactivate()
+      )
+    }
+
+    {:Link linkPressUp
+      :EventSource      0
+      :EventType        UserInput
+      :EventData        KeyUp
+      :LinkEffect(
+        navStateMachine.CallAction(selectUp)
+      )
+    }
+
+    {:Link linkPressDown
+      :EventSource      0
+      :EventType        UserInput
+      :EventData        KeyDown
+      :LinkEffect(
+        navStateMachine.CallAction(selectDown)
+      )
+    }
+
+    {:Link linkPressSelect
+      :EventSource      0
+      :EventType        UserInput
+      :EventData        KeySelect
+      :LinkEffect(
+          navStateMachine.CallAction(execute)
+      )
+    }
+
+    {:Link linkStartup
+      :EventSource      linkStartup
+      :EventType        IsRunning
+      :InitiallyActive  True
+      :LinkEffect(
+        CastToStringInt.Call(
+          residentPrgResult
+          :GObjectRef clock
+          :IndirectRef groupID
+          :IndirectRef rowStartObjectID
+        )
+      )
+    }
+
+    {:StateMachine navStateMachine
+      {:State noSelection
+        :OnEntry{
+          selectedRow.SetVariable(-1)
+          linkUpdateSelectedRow.Activate()
+        }
+        :Action selectDown{
+          navStateMachine.SetState(clockState)
+        }
+        :Action selectUp{
+          navStateMachine.SetState(extrasState)
+        }
+        :Action execute{
+          selectedRow.SetVariable(-1) // do nothing
+        }
+      }
+      {:State clockState
+        :OnEntry{
+          selectedRow.SetVariable(0)
+          linkUpdateSelectedRow.Activate()
+        }
+        :Action selectDown{
+          navStateMachine.SetState(calculatorState)
+        }
+        :Action selectUp{
+          navStateMachine.SetState(clockState)
+        }
+        :Action execute{
+          :TransitionTo(("~/clock.asn" 0))
+        }
+      }
+      {:State calculatorState
+        :OnEntry{
+          selectedRow.SetVariable(1)
+          linkUpdateSelectedRow.Activate()
+        }
+        :Action selectDown{
+          navStateMachine.SetState(extrasState)
+        }
+        :Action selectUp{
+          navStateMachine.SetState(clockState)
+        }
+        :Action execute{
+          :TransitionTo(("~/weather.asn" 0))
+        }
+      }
+      {:State extrasState
+        :OnEntry{
+          selectedRow.SetVariable(2)
+          linkUpdateSelectedRow.Activate()
+        }
+        :Action selectDown{
+          navStateMachine.SetState(extrasState)
+        }
+        :Action selectUp{
+          navStateMachine.SetState(calculatorState)
+        }
+        :Action execute{
+          :TransitionTo(("~/extras.asn" 0))
+        }
+      }
+    }
+  )
+  :InputEventReg 4
+  :SceneCS 720 576
+}

@@ -1,0 +1,8 @@
+{
+    "name": "HaSSHing",
+    "identifier": "hasshing",
+    "category": ["misc", "pwn"],
+    "difficulty": "easy",
+    "flag": "justCTF{s1d3ch4nn3ls_4tw_79828}",
+    "version": 2
+}

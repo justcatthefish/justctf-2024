@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://cdn.jsdelivr.net/npm/esprima@4.0.1/dist/esprima.min.js"></script>
+		<script src="https://estools.github.io/escodegen/escodegen.browser.js"></script>
+		<script src="code.js"></script>
+		<link rel="stylesheet" href="style.css" />
+		<title>Calculator</title>
+	</head>
+	<body>
+		<div class="app-container">
+			<h1>Calculator</h1>
+			<textarea
+				id="code"
+				rows="20"
+				placeholder="a = 1 + 1
+b = 2 + a
+c = b * 7"></textarea>
+			<div id="output">Results:</div>
+			<button id="btn">calculate</button>
+			<a href="/report.html">Report</a>
+		</div>
+	</body>
+</html>

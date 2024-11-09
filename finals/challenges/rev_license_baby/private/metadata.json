@@ -1,0 +1,8 @@
+{
+    "identifier": "re_baby_license",
+    "name": "Baby License",
+    "category": ["re", "baby"],
+    "difficulty": "easy",
+    "flag": ["justCTF{R3v1nG_4T_1t5_f1n3sT}"],
+    "version": 0
+}

@@ -1,0 +1,8 @@
+{
+    "dependencies": {
+      "express": "^4.19.2",
+      "body-parser": "^1.20.2",
+      "seedrandom": "^3.0.5",
+      "express-session": "^1.18.0"
+    }
+}

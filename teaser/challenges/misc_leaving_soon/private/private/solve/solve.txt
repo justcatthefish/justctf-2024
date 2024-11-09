@@ -1,0 +1,31 @@
+tshark -r catflix.pcapng --export-objects "http,destdir"
+
+for i in (seq 0 34)
+	cat episodes\%2Fepisode_"$i"_video*.mp4 > episodes/episode_"$i"_video.mp4
+end
+
+for i in (seq 0 34)
+	cat episodes\%2Fepisode_"$i"_audio*.mp4 > episodes/episode_"$i"_audio.mp4
+end
+
+cat *.mpd | grep -A 3 edef8ba9-79d6-4ace-a3c8-27dcd51d21ed | grep "<cenc:pssh>" | uniq | sed -E 's/<.?cenc:pssh>| //g' > pssh.txt
+
+for i in (cat pssh.txt )
+	python3 ../widevine_keys/l3.py $i
+end > keys.txt
+
+3rd key is the good one (you can get it by comparing key id)
+
+cleanup keys
+
+
+decrypt
+
+for i in (seq 0 34)
+	ffmpeg -decryption_key (sed -n (math $i+1)p ../keys.txt) -i episode_"$i"_video.mp4 -codec copy decrypted_video$i.mp4
+end
+
+
+view flag o7
+
+mpv * --start=95%

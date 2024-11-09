@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .menu {
+            background-color: #007bff;
+            padding: 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .menu a:hover {
+            background-color: #0056b3;
+        }
+        .main-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+        }
+        .user-info {
+            margin-bottom: 20px;
+        }
+        .input-container {
+            width: 100%;
+        }
+        .input-container label {
+            display: block;
+            margin: 5px;
+        }
+        .input-container input,
+        select {
+            width: 65%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin: 10px;
+        }
+        .button-container {
+            margin: 10px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+        .small-button {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        .button {
+            padding: 5px 10px;
+            font-size: 22px;
+        }
+        .seed-info {
+            margin-top: 20px;
+            font-family: monospace;
+            text-align: center;
+        }
+        .seed-info p {
+            margin-bottom: 5px;
+        }
+        .seed-info span {
+            font-weight: bold;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+    <script src="/js/main.js"></script>
+    <script src="/js/dice.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="menu">
+        <div>
+            <span id="username"></span>
+            <span id="balance"></span>
+        </div>
+        <div>
+            <a href="home.html">Play</a>
+            <a href="flag">Flag</a>
+            <a href="provably-fair.html">Provably Fair</a>
+            <a href="signout">Sign Out</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>Dice</h1>
+        <div style="display: flex; width: 100%;">
+            <div class="input-container">
+                <label for="guess">Select Your Guess:</label>
+                <select id="guess">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+
+            <div class="input-container">
+                <label for="bet">Enter Bet:</label>
+                <input type="number" id="bet" placeholder="Enter bet amount">
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button id="play" class="button">Play</button>
+        </div>
+
+        <h2 id="result">
+            Roll result: -
+        </h2>
+
+        <textarea style="resize: none; width: 80%;" rows="5" disabled>Select your dice roll guess, enter your bet and click Play!
+If you guess the outcome correctly, you will win 3x your bet.
+Our Casino is 100% fair, more info on our Provably Fair page.
+Return to Player value of this game is 50 %.
+Good Luck!</textarea>
+
+        <div style="display: flex; width: 100%;">
+            <div class="input-container">
+                <input type="text" id="clientSeed" style="font-family:monospace" disabled>
+                <button id="randomizeSeed" class="small-button">Randomize Client Seed</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="seed-info">
+        <p><span>sha256(Server Seed):</span> <span id="serverSeedHash"></span></p>
+        <p><span>Nonce:</span> <span id="nonce"></span></p>
+    </div>
+</div>
+
+</body>
+</html>

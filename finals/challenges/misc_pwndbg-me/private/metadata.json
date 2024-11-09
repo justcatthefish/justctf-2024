@@ -1,0 +1,10 @@
+{
+    "identifier": "pwndbg-me",
+    "name": "pwndbg-me",
+    "category": "misc",
+    "difficulty": "easy",
+    "flag": [
+        "justCTF{Check now :) Pwndbg also provides releases for RISC-V and ARM32}"
+    ],
+    "version": 1
+}

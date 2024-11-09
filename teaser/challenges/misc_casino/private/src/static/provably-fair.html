@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .menu {
+            background-color: #007bff;
+            padding: 10px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .menu a:hover {
+            background-color: #0056b3;
+        }
+        .main-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: left;
+        }
+        .user-info {
+            margin-bottom: 20px;
+        }
+        .input-container {
+            width: 100%;
+        }
+        .input-container label {
+            display: block;
+            margin: 5px;
+        }
+        .input-container input,
+        select {
+            width: 65%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin: 10px;
+        }
+        .button-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+        .small-button {
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+        .button {
+            padding: 5px 10px;
+            font-size: 22px;
+        }
+        .seed-info {
+            margin-top: 20px;
+            font-family: monospace;
+            text-align: center;
+        }
+        .seed-info p {
+            margin-bottom: 5px;
+        }
+        .seed-info span {
+            font-weight: bold;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+    <script src="/js/main.js"></script>
+    <script src="/js/provablyFair.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="menu">
+        <div>
+            <span id="username"></span>
+            <span id="balance"></span>
+        </div>
+        <div>
+            <a href="home.html">Play</a>
+            <a href="flag">Flag</a>
+            <a href="provably-fair.html">Provably Fair</a>
+            <a href="signout">Sign Out</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>Provably Fair</h1>
+        Our casino provides 100% fair game for all players by integration of provably fair.
+        <p>After revealing your server seed all your past games can be verified with this nodejs code:</p>
+        
+        <textarea disabled="true" rows="22" style="resize: none; font-family: monospace; width: 100%;">
+const seedrandom = require('seedrandom')
+const crypto = require('crypto')
+
+// provide values for server seed, client seed and nonce
+const SERVER_SEED = "" // to get your current server seed click reveal
+const CLIENT_SEED = "" 
+const NONCE = 0 
+
+// provide server seed hash
+const SERVER_SEED_HASH = "" 
+
+if(crypto.createHash("sha256").update(SERVER_SEED).digest("hex") != SERVER_SEED_HASH) {
+    console.log("Server seed hash doesn't match server seed hashs")
+}
+
+let roll = (seedrandom(JSON.stringify({
+    serverSeed: SERVER_SEED,
+    clientSeed: CLIENT_SEED,
+    nonce: NONCE
+})).int32() >>> 0) % 6 + 1
+
+console.log("Roll result:", roll)</textarea>
+        
+    <p style="font-family: monospace;">Your current SERVER_SEED_HASH = "<span id="serverSeedHash"></span>"</p>
+    <p style="font-family: monospace;">Your current CLIENT_SEED = "<span id="clientSeed"></span>"</p>
+    <p style="font-family: monospace;">Your current NONCE = <span id="nonce"></span></p>
+    <div class="button-container">
+        <button id="revealServerSeed" class="small-button">Reveal Server Seed</button>
+    </div>
+    <div id="result">
+    </div>
+
+
+</div>
+
+</body>
+</html>

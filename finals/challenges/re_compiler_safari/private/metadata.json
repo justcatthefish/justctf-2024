@@ -1,0 +1,10 @@
+{
+    "name": "Compiler Safari",
+    "identifier": "re-compiler-safari",
+    "category": ["re"],
+    "difficulty": "medium",
+    "flag": [
+    	"justCTF{0bscur3_r1sc5_d1s4sm_sk1llz_++}"
+    ],
+    "version": 1
+}

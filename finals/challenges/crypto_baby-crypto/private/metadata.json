@@ -1,0 +1,10 @@
+{
+    "identifier": "crypto_otp_encryption",
+    "name": "OTP encryption",
+    "category": "crypto",
+    "difficulty": "easy",
+    "flag": [
+        "justCTF{fl4w3d_RN6_f7w}"
+    ],
+    "version": 1
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Wild West",
+    "identifier": "wildwest",
+    "category": ["ppc"],
+    "difficulty": "easy",
+    "flag": "justCTF{that_would_never_happen_IRL}",
+    "version": 1
+}

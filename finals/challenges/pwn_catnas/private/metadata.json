@@ -1,0 +1,8 @@
+{
+    "name": "catnas",
+    "identifier": "pwn_catnas",
+    "category": ["pwn"],
+    "flag": ["justCTF{ShiH_tzu_was_Here!!!11}"],
+    "difficulty": "easy",
+    "version": 3
+}

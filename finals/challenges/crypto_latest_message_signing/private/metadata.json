@@ -1,0 +1,8 @@
+{
+    "name": "Latest Message Signing",
+    "identifier": "crypto_latest_message_signing",
+    "category": ["crypto"],
+    "flag": ["justCTF{lms_n33d3_ch3k3ums_HDJH9382kcs83h8JJ}"],
+    "difficulty": "medium",
+    "version": 3
+}

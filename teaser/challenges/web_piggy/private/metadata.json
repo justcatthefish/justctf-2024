@@ -1,0 +1,10 @@
+{
+    "identifier": "piggy",
+    "name": "Piggy",
+    "category": "web",
+    "difficulty": "medium",
+    "flag": [
+        "justCTF{0iNk_oinKxD}"
+    ],
+    "version": 3
+}

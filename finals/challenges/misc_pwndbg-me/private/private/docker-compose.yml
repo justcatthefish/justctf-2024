@@ -1,0 +1,19 @@
+version: '2.4'
+
+services:
+  manager:
+    build:
+      context: ./instancer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: "unless-stopped"
+#    network_mode: host
+    ports:
+      - 1337:1337
+    environment:
+      - FLAG
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "30m"
+        max-file: "5"

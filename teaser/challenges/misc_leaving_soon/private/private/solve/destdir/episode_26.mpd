@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Generated with https://github.com/shaka-project/shaka-packager version v3.2.0-53b8668-release-->
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:mpeg:dash:schema:mpd:2011 DASH-MPD.xsd" xmlns:cenc="urn:mpeg:cenc:2013" profiles="urn:mpeg:dash:profile:isoff-on-demand:2011" minBufferTime="PT2S" type="static" mediaPresentationDuration="PT18.6S">
+  <Period id="0">
+    <AdaptationSet id="0" contentType="audio" subsegmentStartsWithSAP="1" subsegmentAlignment="true">
+      <ContentProtection value="cenc" schemeIdUri="urn:mpeg:dash:mp4protection:2011" cenc:default_KID="4069fefb-ee26-53ea-8a22-18ed3a912732"/>
+      <ContentProtection schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed">
+        <cenc:pssh>AAAAN3Bzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABciD1zLL4P5mnarfgXWDhnyFUjj3JWbBg==</cenc:pssh>
+      </ContentProtection>
+      <ContentProtection schemeIdUri="urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b">
+        <cenc:pssh>AAAAdHBzc2gBAAAAEHfv7MCyTQKs4zweUuL7SwAAAAXSd14T7WpZpLE5jZFEBLetUVUqTrlqWvG8GwLxwD1p5fnAvXxdVVeShZ81BBnluqtoY1WGFDlRfY4HnW0IQ3o5QGn+++4mU+qKIhjtOpEnMgAAAAA=</cenc:pssh>
+      </ContentProtection>
+      <Representation id="0" bandwidth="143113" codecs="mp4a.40.2" mimeType="audio/mp4" audioSamplingRate="44100">
+        <AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
+        <BaseURL>episodes%2Fepisode_26_audio.mp4</BaseURL>
+        <SegmentBase indexRange="1126-1193" timescale="44100" presentationTimeOffset="1012">
+          <Initialization range="0-1125"/>
+        </SegmentBase>
+      </Representation>
+    </AdaptationSet>
+    <AdaptationSet id="1" contentType="video" width="480" height="360" frameRate="12800/512" subsegmentAlignment="true" par="4:3">
+      <SupplementalProperty schemeIdUri="urn:mpeg:mpegB:cicp:TransferCharacteristics" value="13"/>
+      <ContentProtection value="cenc" schemeIdUri="urn:mpeg:dash:mp4protection:2011" cenc:default_KID="d2775e13-ed6a-59a4-b139-8d914404b7ad"/>
+      <ContentProtection schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed">
+        <cenc:pssh>AAAAN3Bzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABciD1zLL4P5mnarfgXWDhnyFUjj3JWbBg==</cenc:pssh>
+      </ContentProtection>
+      <ContentProtection schemeIdUri="urn:uuid:1077efec-c0b2-4d02-ace3-3c1e52e2fb4b">
+        <cenc:pssh>AAAAdHBzc2gBAAAAEHfv7MCyTQKs4zweUuL7SwAAAAXSd14T7WpZpLE5jZFEBLetUVUqTrlqWvG8GwLxwD1p5fnAvXxdVVeShZ81BBnluqtoY1WGFDlRfY4HnW0IQ3o5QGn+++4mU+qKIhjtOpEnMgAAAAA=</cenc:pssh>
+      </ContentProtection>
+      <Representation id="1" bandwidth="77715" codecs="avc1.640015" mimeType="video/mp4" sar="1:1">
+        <BaseURL>episodes%2Fepisode_26_video.mp4</BaseURL>
+        <SegmentBase indexRange="1276-1343" timescale="12800" presentationTimeOffset="294">
+          <Initialization range="0-1275"/>
+        </SegmentBase>
+      </Representation>
+    </AdaptationSet>
+  </Period>
+</MPD>

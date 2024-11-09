@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Another Another CSP</title>
+	<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'">
+	<style>
+		* {
+			font-family: monospace;
+		}
+		#content {
+			margin-left: auto;
+			margin-right: auto;
+			width: 100%;
+			max-width: 800px;
+		}
+		button {
+			font-size: 1.5em;
+		}
+		iframe {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			width: 90vw;
+			height: 800px;
+			border: 1px gray solid;
+		}
+	</style>
+</head>
+<body>
+	<div id="content">
+		<h1>Another Another CSP</h1>
+		<p>👉 Another one, another one. 👈</p>
+		<form id="form">
+			<textarea id="code" placeholder="your code here" rows="20" cols="80"></textarea>
+			<br>
+			<button id="submit">run</button>
+		</form>
+		<br>
+	</div>
+	<div id="iframeContent"></div>
+</body>
+<script>
+
+	function randomToken(){
+		const token = crypto.getRandomValues(new Uint8Array(20)).reduce((a,b)=>BigInt(256)*a + BigInt(b), BigInt(0)).toString(36).padStart(31, '0');
+		localStorage.setItem('token', token);
+		return token;
+	}
+	console.log(randomToken());
+
+	function insertIframe(code){
+		iframeContent.textContent = '';
+		const token = randomToken();
+		const iframe = document.createElement('iframe');
+		iframe.srcdoc =  `<h1 data-token="${token}">${token}</h1>${code}`;
+		iframe.sandbox = '';
+		iframe.csp = "script-src 'none'";
+		iframeContent.appendChild(iframe);
+	}
+
+    window.onmessage = e => {
+        if(e.data.get_flag){
+			const token = localStorage.getItem('token');
+			if(e.data.token === token){
+				const flag = localStorage.getItem('flag') || "justCTF{example_flag}";
+				e.source.postMessage({flag}, '*');
+			}
+		}else if(e.data.code){
+			insertIframe(e.data.code);
+		}
+    }
+
+	document.getElementById('form').onsubmit = e => {
+		e.preventDefault();
+		insertIframe(document.getElementById('code').value);
+	}
+</script>
+</html>

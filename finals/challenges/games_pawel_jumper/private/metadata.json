@@ -1,0 +1,10 @@
+{
+    "identifier": "pawel-jumper",
+    "name": "Pawel jumper",
+    "category": "games",
+    "difficulty": "medium",
+    "flag": [
+        "justCTF{4l4_kurw4_rz3czyw15cie_kurwa}"
+    ],
+    "version": 2
+}

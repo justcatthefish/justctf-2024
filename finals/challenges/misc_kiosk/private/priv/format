@@ -1,0 +1,9 @@
+0000: 75 73 65 72 6E 61 6D 65 00 00 00 00 00 00 00 00  | username........|	16B username field
+0010: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF  | ................|
+0020: 00 64 FF FF FF FF FF FF FF FF FF FF FF FF FF FF  | ................|	2B funds field
+0030: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF  | ................|
+0040: 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF  | ................|	1B debug flag field
+0050: [Remaining bytes until offset 508 filled with FF]|
+01F0: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF  | ................|
+01F8: DE AD BE EF                                      | ....             |	4B crc32 checksum field from data[0:508] 
+

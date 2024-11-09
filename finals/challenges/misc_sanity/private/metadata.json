@@ -1,0 +1,16 @@
+{
+    "name": "Sanity check",
+    "identifier": "sanity",
+    "category": ["misc"],
+    "difficulty": "easy",
+    "flag": [
+    	"justCTF{w3lc0me_t0_th3_4ren4}",
+    	"justCTF{w3lcome_t0_th3_4ren4}",
+    	"justCTF{w3lc0me_to_th3_4ren4}",
+    	"justCTF{w3lcome_to_th3_4ren4}",
+    	"justCTF{w3lcOme_t0_th3_4ren4}",
+    	"justCTF{w3lc0me_tO_th3_4ren4}",
+    	"justCTF{w3lcOme_tO_th3_4ren4}"
+    ],
+    "version": 1
+}

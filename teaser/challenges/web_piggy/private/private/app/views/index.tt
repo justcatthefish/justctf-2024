@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piggy</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0e5d8;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #ff6347;
+        }
+        img {
+            max-width: 300px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>[% greeting %]! Welcome to our app.</h1>
+    <p>This is Piggy, your friendly task companion!</p>
+    <img src="/images/piggy.webp" alt="Laughing Pig">
+</body>
+</html>

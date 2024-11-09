@@ -1,0 +1,10 @@
+{
+    "identifier": "misc_nfc_market",
+    "name": "NFC Flag Market",
+    "category": "misc",
+    "difficulty": "easy",
+    "flag": [
+        "justCTF{50M3_NFC_B453D_4PP5_4R3_50_BR0K3N}"
+    ],
+    "version": 2
+}

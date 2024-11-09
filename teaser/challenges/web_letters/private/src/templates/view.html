@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .letter {
+            border: 1px solid #ccc;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .recipient {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .content {
+            font-size: 16px;
+        }
+        .report-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="letter">
+        <div class="title">{{ title }}</div>
+        <div class="recipient">Dear {{ recipient }},</div>
+        <div class="content">{{ content | safe }}</div>
+        <form action="/letter/{{ id }}/report" method="post">
+            <button type="submit" class="report-button">Report</button>
+        </form>
+    </div>
+</body>
+</html>

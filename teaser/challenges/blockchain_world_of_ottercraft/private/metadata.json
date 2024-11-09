@@ -1,0 +1,10 @@
+{
+    "name": "World of Ottercraft",
+    "identifier": "woo",
+    "category": [ "blockchain" ],
+    "difficulty": "hard",
+    "flag": [
+        "justCTF{Ott3r_uses_expl0it_its_sup3r_eff3ctiv3}"
+    ],
+    "version": 5
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+		<link
+			href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css"
+			rel="stylesheet"
+			type="text/css" />
+		<!-- <script src="https://www.google.com/recaptcha/api.js?render=<%= sitekey %>"></script> -->
+		<title>Instancer</title>
+	</head>
+
+	<body>
+		<div class="hero">
+			<div class="hero-body has-text-centered">
+				<button class="button is-success" id="request-instance-button">
+					Request instance
+				</button>
+				<center>
+				<div
+					id="captcha-widget"
+					style="margin: 1rem auto"></div>
+					</center>
+				<p>
+					<code></code>
+				</p>
+			</div>
+		</div>
+		<script>
+			const requestInstance = async () => {
+				const button = document.getElementById(
+					"request-instance-button"
+				);
+				button.classList.add("is-loading");
+				try {
+					const token =
+						grecaptcha.getResponse(captchaWidget) || "no-captcha";
+					const response = await fetch("/api/run", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							token,
+						}),
+					});
+					const data = await response.json();
+					if (data.success) {
+						document.querySelector(
+							"code"
+						).innerText = `Success\nInstance will live for ${
+							data.lifespan / 1000
+						} seconds\nMinecraft server IP: ${data.id}.minecraft-death.nc.jctf.pro:25565`;
+						grecaptcha.reset(captchaWidget);
+					} else {
+						document.querySelector(
+							"code"
+						).innerText = `Error: ${data.message}`;
+					}
+				} finally {
+					button.classList.remove("is-loading");
+				}
+			};
+
+			var captchaWidget;
+			var onloadCallback = () => {
+				console.log("loaded");
+				captchaWidget = grecaptcha.render("captcha-widget", {
+					sitekey: "<%= sitekey %>",
+					theme: "light",
+				});
+				document
+					.getElementById("request-instance-button")
+					.addEventListener("click", requestInstance);
+			};
+		</script>
+		<script
+			src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+			async
+			defer></script>
+	</body>
+</html>

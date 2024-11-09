@@ -1,0 +1,22 @@
+services:
+  prepare:
+    build:
+      context: ./prepare
+      args:
+        - FLAG=${FLAG:-justCTF{test-flag}}
+    environment:
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-AdminPassword}
+      - FLAG_PASSWORD=${FLAG_PASSWORD:-FlagPassword}
+    depends_on:
+      - app
+
+  app:
+    build:
+      context: ./app
+      args:
+        - CACHEBUST=$CACHEBUST
+    environment:
+      - FLAG_PASSWORD=${FLAG_PASSWORD:-FlagPassword}
+    ports:
+      - "80:80"
+

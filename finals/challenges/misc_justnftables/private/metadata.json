@@ -1,0 +1,10 @@
+{
+    "identifier": "justnftables",
+    "name": "JustNFTables",
+    "category": "misc",
+    "difficulty": "medium",
+    "flag": [
+        "justCTF{firewall-and-network-is-easy-right?}"
+    ],
+    "version": 2
+}

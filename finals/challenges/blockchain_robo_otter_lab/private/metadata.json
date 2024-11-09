@@ -1,0 +1,10 @@
+{
+    "name": "RoboOtter Lab",
+    "identifier": "rol",
+    "category": [ "blockchain" ],
+    "difficulty": "easy",
+    "flag": [
+        "justCTF{RoboOtter_built_and_r3ady_to_rul3_th3_wat3rs!}"
+    ],
+    "version": 1
+}

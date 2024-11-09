@@ -1,0 +1,10 @@
+{
+    "name": "Otter Bay Council",
+    "identifier": "obc",
+    "category": [ "blockchain" ],
+    "difficulty": "medium",
+    "flag": [
+        "justCTF{it_is_not_forbidd3n_if_it_is_w3ll_hidd3n!}"
+    ],
+    "version": 3
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Budget SoC",
+    "identifier": "budget_soc",
+    "category": ["fore", "misc"],
+    "flag": ["justCTF{dUmp3d_r3v3rs3d_h4ck3d}"],
+    "difficulty": "medium",
+    "version": 1
+}

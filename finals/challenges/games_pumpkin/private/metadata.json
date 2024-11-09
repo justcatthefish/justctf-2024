@@ -1,0 +1,10 @@
+{
+    "identifier": "games-pumpkin",
+    "name": "Minecraft: Pumpkin",
+    "category": "games",
+    "difficulty": "hard",
+    "flag": [
+        "justCTF{al1_pumk1n_cur5es_br0k3n!}"
+    ],
+    "version": 1
+}

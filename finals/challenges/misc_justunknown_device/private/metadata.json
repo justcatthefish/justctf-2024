@@ -1,0 +1,8 @@
+{
+    "name": "justUnknown device",
+    "identifier": "just_unkown_debice",
+    "category": ["fore", "misc"],
+    "flag": ["justCTF{y0u_go0t_m3_unserializ3d_bro}"],
+    "difficulty": "medium",
+    "version": 1
+}

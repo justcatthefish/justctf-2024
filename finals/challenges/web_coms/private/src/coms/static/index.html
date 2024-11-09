@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
+		/>
+		<title>Coms</title>
+		<style>
+			.wire-point {
+				cursor: pointer;
+				border-radius: 25px;
+				width: 25px;
+				height: 25px;
+				position: absolute;
+			}
+
+			.wire-point:hover {
+				opacity: 0.9;
+			}
+
+			.wires-container {
+				align-items: center;
+				height: 200px;
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				position: relative;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="hero">
+			<div class="hero-body content">
+				<h1>Coms</h1>
+				<h2>Use the coms to contact the main ship and perform needed tasks!</h2>
+				<hr />
+				<code id="output"></code>
+				<hr />
+				<div>
+					<h3>The Wires</h3>
+					<p>get all the top dots around the proper bottom dots</p>
+					<div class="wires-container" id="wires-container"></div>
+				</div>
+				<hr />
+				<div>
+					<h3>The ships</h3>
+					<p>make sure the proper ships are hit</p>
+					<div id="ships"></div>
+				</div>
+				<hr />
+				<div>
+					<h3>The passcode</h3>
+					<p>submit a valid passcode</p>
+					<div id="passcode">
+						<input
+							class="input"
+							type="text"
+							placeholder="D029372482"
+							id="passcode-input"
+						/>
+					</div>
+				</div>
+				<hr />
+				<button class="button is-primary" id="solve">Solve</button>
+			</div>
+		</div>
+		<script>
+			const randomColor = () => {
+				const r = Math.floor(Math.random() * 256);
+				const g = Math.floor(Math.random() * 256);
+				const b = Math.floor(Math.random() * 256);
+				return `rgb(${r}, ${g}, ${b})`;
+			};
+
+			const solveTasks = async () => {
+				try {
+					const wiresData = solveWires();
+					const shipsData = solveShips();
+					const passcodeData = solvePasscode();
+					const response = await fetch("/task", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({
+							taskData: {
+								wires: wiresData,
+								ships: shipsData,
+								passcode: passcodeData,
+							},
+						}),
+					});
+					const responseData = await response.json();
+					throw new Error(responseData.message);
+				} catch (err) {
+					document.getElementById("output").innerText = err.message;
+				}
+			};
+
+			let wirePairs = [];
+			let shipsHits = [];
+
+			const prepareWires = () => {
+				let left;
+				wirePairs = [];
+				const topWires = [];
+				const bottomWires = [];
+				const wiresContainer = document.getElementById("wires-container");
+				for (let i = 0; i < 20; i++) {
+					const el = document.getElementById("wire-result-" + i);
+					if (el) {
+						el.remove();
+					}
+				}
+
+				left = 0;
+				for (let i = 0; i < 20; i++) {
+					const topWire = document.createElement("div");
+					topWire.id = "wire-t" + (i + 1);
+					topWire.className = "wire-point";
+					topWire.style.backgroundColor = randomColor();
+					topWire.style.top = "50px";
+					topWire.style.left = left + "px";
+					topWires.push(topWire);
+					wiresContainer.appendChild(topWire);
+					left += (wiresContainer.offsetWidth - wiresContainer.offsetLeft) / 20;
+				}
+				left = 0;
+				for (let i = 0; i < 20; i++) {
+					const bottomWire = document.createElement("div");
+					bottomWire.id = "wire-b" + (i + 1);
+					bottomWire.className = "wire-point";
+					bottomWire.style.bottom = "50px";
+					bottomWire.style.left = left + "px";
+					bottomWires.push(bottomWire);
+					wiresContainer.appendChild(bottomWire);
+					left += (wiresContainer.offsetWidth - wiresContainer.offsetLeft) / 20;
+				}
+
+				for (let i = 0; i < topWires.length; i++) {
+					const randomBottomWire =
+						bottomWires[Math.floor(Math.random() * bottomWires.length)];
+					const topWire = topWires[i];
+					wirePairs.push([topWire, randomBottomWire]);
+					bottomWires.splice(bottomWires.indexOf(randomBottomWire), 1);
+					const pairColor = randomColor();
+
+					randomBottomWire.style.backgroundColor = pairColor;
+					topWire.style.backgroundColor = pairColor;
+					randomBottomWire.draggable = true;
+					topWire.draggable = true;
+
+					topWire.addEventListener("dragend", (event) => {
+						const alreadyExisting = document.getElementById("wire-result-" + i);
+						if (alreadyExisting) {
+							alreadyExisting.remove();
+						}
+						const el = document.createElement("div");
+						el.id = "wire-result-" + i;
+						el.style.width = "50px";
+						el.style.height = "50px";
+						el.style.position = "absolute";
+						el.style.borderRadius = "50px";
+						el.style.borderWidth = "5px";
+						el.style.borderColor = pairColor;
+						el.style.top = event.pageY - 25 + "px";
+						el.style.left = event.pageX - 25 + "px";
+						el.style.borderStyle = "solid";
+						document.body.appendChild(el);
+					});
+				}
+			};
+
+			const prepareShips = () => {
+				const allShips = [];
+				const shipsContainer = document.getElementById("ships");
+				for (let i = 0; i < 20; i++) {
+					const shipCheckbox = document.createElement("input");
+					shipCheckbox.type = "checkbox";
+					shipCheckbox.id = "ship-" + i;
+					shipCheckbox.style.marginRight = "2px";
+					shipsContainer.appendChild(shipCheckbox);
+					allShips.push(shipCheckbox);
+				}
+				for (let i = 0; i < 5; i++) {
+					const randomShip =
+						allShips[Math.floor(Math.random() * allShips.length)];
+					shipsHits.push(randomShip);
+					allShips.splice(allShips.indexOf(randomShip), 1);
+				}
+			};
+
+			const solveWires = () => {
+				const data = [];
+				const results = [];
+				for (let i = 0; i < 20; i++) {
+					const result = document.getElementById("wire-result-" + i);
+					if (!result) {
+						throw new Error("You need to connect all the wires!");
+					}
+					const bodyRect = document.body.getBoundingClientRect();
+					const elemRect = result.getBoundingClientRect();
+					const bottomCorrect = wirePairs.find(
+						(pair) => pair[0].id === "wire-t" + (i + 1)
+					)[1];
+					const bottomRect = bottomCorrect.getBoundingClientRect();
+					const isBottomBoundedByResult =
+						elemRect.top <= bottomRect.top &&
+						elemRect.bottom >= bottomRect.bottom &&
+						elemRect.left <= bottomRect.left &&
+						elemRect.right >= bottomRect.right;
+					data.push([
+						elemRect.top,
+						bottomRect.top,
+						elemRect.bottom,
+						bottomRect.bottom,
+						elemRect.left,
+						bottomRect.left,
+						elemRect.right,
+						bottomRect.right,
+					]);
+				}
+				return data;
+			};
+
+			const solveShips = () => {
+				let data = [];
+				for (let i = 0; i < 20; i++) {
+					const shipCheckbox = document.getElementById("ship-" + i);
+					let correct = false;
+					if (shipCheckbox.checked && shipsHits.includes(shipCheckbox)) {
+						correct = true;
+					}
+					if (!shipCheckbox.checked && !shipsHits.includes(shipCheckbox)) {
+						correct = true;
+					}
+					data.push({
+						ship: "ship" + i,
+						correct,
+					});
+				}
+				return data;
+			};
+
+			const solvePasscode = () => {
+				const passcodeInput = document.getElementById("passcode-input");
+				return passcodeInput.value;
+			};
+
+			window.addEventListener("DOMContentLoaded", () => {
+				prepareWires();
+				prepareShips();
+
+				document.getElementById("solve").addEventListener("click", solveTasks);
+			});
+
+			window.addEventListener("resize", (e) => {
+				const wiresContainer = document.getElementById("wires-container");
+				wiresContainer.innerHTML = "";
+				prepareWires();
+			});
+		</script>
+	</body>
+</html>

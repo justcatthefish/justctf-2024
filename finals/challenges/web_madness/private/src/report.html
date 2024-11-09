@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Madness</title>
+    <style nonce="__NONCE__">
+        @import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+        html {
+            --main-bg-color: rgb(199, 150, 150);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--main-bg-color);
+            overflow: hidden;
+        }
+
+        #welcomeDiv {
+            height: 100vh;
+            transition: background 1s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2em;
+            box-sizing: border-box;
+            text-align: center;
+            background-color: var(--main-bg-color);
+            color: var(--main-bg-color);
+        }
+
+        #welcomeDiv .card {
+            transition: background 1s;
+            border: 2px black;
+            padding: 10px;
+            filter: invert(100%);
+            transition: color 1s;
+            max-width: 730px;
+        }
+
+        h1 {
+            margin: 0;
+            text-shadow: 3px 3px 0 rgba(255, 255, 255, .3);
+            font-weight: 100;
+            font-size: xxx-large;
+            margin-bottom: 20px
+        }
+
+        input{
+            width: 600px; 
+        }
+        input, button{
+            padding: 4px 10px;
+            font-size: x-large;
+            background-color: var(--main-bg-color);
+            border: 0px;
+            color: black;
+        }
+
+        #welcomeDiv .msg{
+            background-color: var(--main-bg-color);
+            margin-top: 10px;
+            color: black;
+            font-size: large;
+
+        }
+    </style>
+</head>
+
+<body>
+    <script nonce="__NONCE__">
+        window.onload = function () {
+            document.documentElement.style.setProperty('--main-bg-color', __COLOR__);
+        }
+    </script>
+    <div id="welcomeDiv">
+        <div class="card">
+            <h1>
+                Report to admin!
+            </h1>
+            <form action="/report" method="POST">
+                <input name="url" placeholder="http://localhost:3000/?user=">
+                <button>Submit</button>
+            </form>
+            __MESSAGE__
+        </div>
+    </div>
+</body>
+
+</html>

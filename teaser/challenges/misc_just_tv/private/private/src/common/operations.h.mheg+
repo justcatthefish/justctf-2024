@@ -1,0 +1,49 @@
+{:IntegerConst BLOCK_WIDTH :ConstValue 6}
+{:IntegerConst BLOCK_HEIGHT :ConstValue 6}
+{:IntegerConst BLOCK_SIZE :ConstValue 36}
+
+//Temporary variables for operations
+defMacro operationsInit
+{
+  {:ResidentPrg GetStringLength :InitiallyActive false :name "GSL" }
+  {:ResidentPrg SearchSubString :InitiallyActive false :name "SSS" }
+  {:ResidentPrg GetSubString :InitiallyActive false :name "GSS"}
+  {:ResidentPrg GetObjectRef :InitiallyActive false :name "CTO"}
+  {:ResidentPrg GetCurrentDate :InitiallyActive false :name "GCD"}
+  {:ResidentPrg FormatDate :InitiallyActive false :name "FDa"}
+  {:ResidentPrg CastToStringInt :InitiallyActive false :name "CSI"}
+
+  {:BooleanVar residentPrgResult :OrigValue false }
+
+  //getLetter
+  {:OStringVar ascii_upercase :OrigValue "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz"}
+
+  //outputs
+  {:IntegerVar intOut1 :OrigValue 0}
+  {:OStringVar stringOut1 :OrigValue ""}
+
+  {:IntegerVar errorNumber :OrigValue 0}
+} endMacro
+
+//Operations
+
+//getLetter
+defMacro getLetter(index)
+{
+  GetSubString.Call(
+      residentPrgResult
+      :IndirectRef ascii_upercase
+      <index>
+      <index>
+      :IndirectRef stringOut1
+  )
+
+  :If(residentPrgResult)
+  {
+    errorNumber.SetVariable(0)
+  }
+  :Else
+  {
+    errorNumber.SetVariable(1)
+  }
+} endMacro

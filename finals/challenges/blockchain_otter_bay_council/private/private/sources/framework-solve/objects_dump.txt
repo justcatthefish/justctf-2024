@@ -1,0 +1,455 @@
+[SERVER] dumping existing objects
+---
+object(0, 0)
+Owner: Account Address ( admin )
+Version: 3
+Contents: sui::coin::Coin<sui::sui::SUI> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(0,0),
+        },
+    },
+    balance: sui::balance::Balance<sui::sui::SUI> {
+        value: 299999956474436u64,
+    },
+}
+---
+object(0, 1)
+Owner: Account Address ( slick_paw )
+Version: 2
+Contents: sui::coin::Coin<sui::sui::SUI> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(0,1),
+        },
+    },
+    balance: sui::balance::Balance<sui::sui::SUI> {
+        value: 299999977910000u64,
+    },
+}
+---
+object(0, 2)
+Owner: Account Address ( _ )
+Version: 1
+Contents: sui::coin::Coin<sui::sui::SUI> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(0,2),
+        },
+    },
+    balance: sui::balance::Balance<sui::sui::SUI> {
+        value: 300000000000000u64,
+    },
+}
+---
+object(1, 0)
+Owner: Account Address ( admin )
+Version: 3
+Contents: challenge::otter_bay_council::OtterBayCouncilCap {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,0),
+        },
+    },
+}
+---
+object(1, 1)
+Owner: Shared( 2 )
+Version: 2
+Contents: challenge::otter_bay_council::OtterBayCouncilVault {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,1),
+        },
+    },
+    forbidden_vault: sui::balance::Balance<challenge::shadow_coin::SHADOW_COIN> {
+        value: 0u64,
+    },
+}
+---
+object(1, 2)
+1,2::{otter_bay_council, shadow_coin}
+---
+object(1, 3)
+Owner: Immutable
+Version: 2
+Contents: sui::coin::CoinMetadata<challenge::shadow_coin::SHADOW_COIN> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,3),
+        },
+    },
+    decimals: 9u8,
+    name: std::string::String {
+        bytes: vector[
+            83u8,
+            104u8,
+            97u8,
+            100u8,
+            111u8,
+            119u8,
+            67u8,
+            111u8,
+            105u8,
+            110u8,
+        ],
+    },
+    symbol: std::ascii::String {
+        bytes: vector[
+            83u8,
+            72u8,
+            68u8,
+            87u8,
+        ],
+    },
+    description: std::string::String {
+        bytes: vector[],
+    },
+    icon_url: std::option::Option<sui::url::Url> {
+        vec: vector[],
+    },
+}
+---
+object(1, 4)
+Owner: Account Address ( admin )
+Version: 3
+Contents: sui::coin::DenyCapV2<challenge::shadow_coin::SHADOW_COIN> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,4),
+        },
+    },
+    allow_global_pause: false,
+}
+---
+object(1, 5)
+Owner: Immutable
+Version: 2
+Contents: sui::coin::RegulatedCoinMetadata<challenge::shadow_coin::SHADOW_COIN> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,5),
+        },
+    },
+    coin_metadata_object: sui::object::ID {
+        bytes: fake(1,3),
+    },
+    deny_cap_object: sui::object::ID {
+        bytes: fake(1,4),
+    },
+}
+---
+object(1, 6)
+Owner: Account Address ( admin )
+Version: 3
+Contents: sui::coin::TreasuryCap<challenge::shadow_coin::SHADOW_COIN> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,6),
+        },
+    },
+    total_supply: sui::balance::Supply<challenge::shadow_coin::SHADOW_COIN> {
+        value: 10000000u64,
+    },
+}
+---
+object(1, 7)
+Owner: Account Address ( admin )
+Version: 2
+Contents: sui::package::UpgradeCap {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,7),
+        },
+    },
+    package: sui::object::ID {
+        bytes: challenge,
+    },
+    version: 1u64,
+    policy: 0u8,
+}
+---
+object(2, 0)
+2,0::solution
+---
+object(2, 1)
+Owner: Account Address ( slick_paw )
+Version: 2
+Contents: sui::coin::Coin<solution::solution::SOLUTION> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(2,1),
+        },
+    },
+    balance: sui::balance::Balance<solution::solution::SOLUTION> {
+        value: 1337u64,
+    },
+}
+---
+object(2, 2)
+Owner: Immutable
+Version: 2
+Contents: sui::coin::CoinMetadata<solution::solution::SOLUTION> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(2,2),
+        },
+    },
+    decimals: 9u8,
+    name: std::string::String {
+        bytes: vector[
+            83u8,
+            111u8,
+            108u8,
+            117u8,
+            116u8,
+            105u8,
+            111u8,
+            110u8,
+            67u8,
+            111u8,
+            105u8,
+            110u8,
+        ],
+    },
+    symbol: std::ascii::String {
+        bytes: vector[
+            83u8,
+            76u8,
+            78u8,
+        ],
+    },
+    description: std::string::String {
+        bytes: vector[],
+    },
+    icon_url: std::option::Option<sui::url::Url> {
+        vec: vector[],
+    },
+}
+---
+object(2, 3)
+Owner: Account Address ( slick_paw )
+Version: 2
+Contents: sui::coin::DenyCapV2<solution::solution::SOLUTION> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(2,3),
+        },
+    },
+    allow_global_pause: false,
+}
+---
+object(2, 4)
+Owner: Immutable
+Version: 2
+Contents: sui::coin::RegulatedCoinMetadata<solution::solution::SOLUTION> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(2,4),
+        },
+    },
+    coin_metadata_object: sui::object::ID {
+        bytes: fake(2,2),
+    },
+    deny_cap_object: sui::object::ID {
+        bytes: fake(2,3),
+    },
+}
+---
+object(2, 5)
+Owner: Account Address ( slick_paw )
+Version: 2
+Contents: sui::coin::TreasuryCap<solution::solution::SOLUTION> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(2,5),
+        },
+    },
+    total_supply: sui::balance::Supply<solution::solution::SOLUTION> {
+        value: 1337u64,
+    },
+}
+---
+object(2, 6)
+Owner: Account Address ( slick_paw )
+Version: 2
+Contents: sui::package::UpgradeCap {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(2,6),
+        },
+    },
+    package: sui::object::ID {
+        bytes: solution,
+    },
+    version: 1u64,
+    policy: 0u8,
+}
+---
+object(3, 0)
+Owner: Account Address ( slick_paw )
+Version: 3
+Contents: sui::coin::Coin<challenge::shadow_coin::SHADOW_COIN> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(3,0),
+        },
+    },
+    balance: sui::balance::Balance<challenge::shadow_coin::SHADOW_COIN> {
+        value: 10000000u64,
+    },
+}
+---
+object(3, 1)
+Owner: Object ID: ( fake(3,3) )
+Version: 3
+Contents: sui::config::Config<sui::deny_list::ConfigWriteCap> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(3,1),
+        },
+    },
+}
+---
+object(3, 2)
+Owner: Object ID: ( fake(3,1) )
+Version: 3
+Contents: sui::dynamic_field::Field<sui::deny_list::AddressKey, sui::config::Setting<bool>> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(3,2),
+        },
+    },
+    name: sui::deny_list::AddressKey {
+        pos0: slick_paw,
+    },
+    value: sui::config::Setting<bool> {
+        data: std::option::Option<sui::config::SettingData<bool>> {
+            vec: vector[
+                sui::config::SettingData<bool> {
+                    newer_value_epoch: 0u64,
+                    newer_value: std::option::Option<bool> {
+                        vec: vector[
+                            true,
+                        ],
+                    },
+                    older_value_opt: std::option::Option<bool> {
+                        vec: vector[],
+                    },
+                },
+            ],
+        },
+    },
+}
+---
+object(3, 3)
+Owner: Object ID: ( 0x0000000000000000000000000000000000000000000000000000000000000403 )
+Version: 3
+Contents: sui::dynamic_field::Field<sui::dynamic_object_field::Wrapper<sui::deny_list::ConfigKey>, sui::object::ID> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(3,3),
+        },
+    },
+    name: sui::dynamic_object_field::Wrapper<sui::deny_list::ConfigKey> {
+        name: sui::deny_list::ConfigKey {
+            per_type_index: 0u64,
+            per_type_key: vector[
+                97u8,
+                101u8,
+                53u8,
+                54u8,
+                49u8,
+                97u8,
+                98u8,
+                52u8,
+                102u8,
+                51u8,
+                101u8,
+                52u8,
+                55u8,
+                56u8,
+                50u8,
+                48u8,
+                55u8,
+                57u8,
+                101u8,
+                54u8,
+                97u8,
+                54u8,
+                101u8,
+                50u8,
+                99u8,
+                52u8,
+                102u8,
+                102u8,
+                97u8,
+                55u8,
+                55u8,
+                48u8,
+                102u8,
+                57u8,
+                98u8,
+                52u8,
+                101u8,
+                98u8,
+                99u8,
+                56u8,
+                56u8,
+                48u8,
+                97u8,
+                97u8,
+                55u8,
+                49u8,
+                57u8,
+                54u8,
+                101u8,
+                52u8,
+                54u8,
+                56u8,
+                98u8,
+                48u8,
+                55u8,
+                52u8,
+                99u8,
+                99u8,
+                57u8,
+                50u8,
+                55u8,
+                50u8,
+                56u8,
+                55u8,
+                58u8,
+                58u8,
+                115u8,
+                104u8,
+                97u8,
+                100u8,
+                111u8,
+                119u8,
+                95u8,
+                99u8,
+                111u8,
+                105u8,
+                110u8,
+                58u8,
+                58u8,
+                83u8,
+                72u8,
+                65u8,
+                68u8,
+                79u8,
+                87u8,
+                95u8,
+                67u8,
+                79u8,
+                73u8,
+                78u8,
+            ],
+        },
+    },
+    value: sui::object::ID {
+        bytes: fake(3,1),
+    },
+}
+

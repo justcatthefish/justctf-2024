@@ -1,0 +1,8 @@
+{
+    "name": "leaving soon",
+    "identifier": "misc_leaving_soon",
+    "category": ["misc"],
+    "flag": ["justCTF{Y0u_w0uldnt_d0wnl04d_a_C4T}"],
+    "difficulty": "medium",
+    "version": 1
+}

@@ -1,0 +1,151 @@
+[SERVER] dumping existing objects
+---
+object(0, 0)
+Owner: Account Address ( admin )
+Version: 3
+Contents: sui::coin::Coin<sui::sui::SUI> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(0,0),
+        },
+    },
+    balance: sui::balance::Balance<sui::sui::SUI> {
+        value: 299999972029812u64,
+    },
+}
+---
+object(0, 1)
+Owner: Account Address ( fixer_flippers )
+Version: 2
+Contents: sui::coin::Coin<sui::sui::SUI> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(0,1),
+        },
+    },
+    balance: sui::balance::Balance<sui::sui::SUI> {
+        value: 299999992821200u64,
+    },
+}
+---
+object(0, 2)
+Owner: Account Address ( _ )
+Version: 1
+Contents: sui::coin::Coin<sui::sui::SUI> {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(0,2),
+        },
+    },
+    balance: sui::balance::Balance<sui::sui::SUI> {
+        value: 300000000000000u64,
+    },
+}
+---
+object(1, 0)
+Owner: Shared( 2 )
+Version: 2
+Contents: challenge::robo_otter_lab::HydroTestTank {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,0),
+        },
+    },
+    required_efficiency: 10u8,
+}
+---
+object(1, 1)
+Owner: Shared( 2 )
+Version: 2
+Contents: challenge::robo_otter_lab::RoboOtter {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,1),
+        },
+    },
+    status: challenge::robo_otter_lab::BuildStatus::STARTED{},
+    firmware_version: 0u8,
+    water_efficiency: 0u8,
+}
+---
+object(1, 2)
+Owner: Shared( 2 )
+Version: 3
+Contents: challenge::robo_otter_lab::RoboOtterLab {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,2),
+        },
+    },
+}
+---
+object(1, 3)
+1,3::robo_otter_lab
+---
+object(1, 4)
+Owner: Account Address ( admin )
+Version: 2
+Contents: sui::package::UpgradeCap {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(1,4),
+        },
+    },
+    package: sui::object::ID {
+        bytes: challenge,
+    },
+    version: 1u64,
+    policy: 0u8,
+}
+---
+object(2, 0)
+2,0::solution
+---
+object(2, 1)
+Owner: Account Address ( fixer_flippers )
+Version: 2
+Contents: sui::package::UpgradeCap {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(2,1),
+        },
+    },
+    package: sui::object::ID {
+        bytes: solution,
+    },
+    version: 1u64,
+    policy: 0u8,
+}
+---
+object(3, 0)
+Owner: Account Address ( fixer_flippers )
+Version: 3
+Contents: challenge::robo_otter_lab::Calibrator {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(3,0),
+        },
+    },
+}
+---
+object(3, 1)
+Owner: Account Address ( fixer_flippers )
+Version: 3
+Contents: challenge::robo_otter_lab::ClawWrench {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(3,1),
+        },
+    },
+}
+---
+object(3, 2)
+Owner: Account Address ( fixer_flippers )
+Version: 3
+Contents: challenge::robo_otter_lab::OtterExoFrame {
+    id: sui::object::UID {
+        id: sui::object::ID {
+            bytes: fake(3,2),
+        },
+    },
+}

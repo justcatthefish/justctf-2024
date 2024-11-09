@@ -1,0 +1,10 @@
+{
+    "identifier": "casino",
+    "name": "Casino",
+    "category": ["misc", "web"],
+    "difficulty": "medium",
+    "flag": [
+        "justCTF{n0_w4y__h0w_1ucky_4re_y0u??}"
+    ],
+    "version": 3
+}

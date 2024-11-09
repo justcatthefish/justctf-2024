@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  rails_app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    networks:
+      - app_network
+
+  nginx:
+    build:
+      context: ./fetcher
+      dockerfile: Dockerfile
+      args:
+        - FLAG=${FLAG:-justCTF{test-flag}}
+    ports:
+      - "80:80"
+    networks:
+      - app_network
+    depends_on:
+      - rails_app
+
+networks:
+  app_network:
+    driver: bridge

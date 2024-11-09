@@ -1,0 +1,8 @@
+{
+    "name": "interlock",
+    "identifier": "interlock",
+    "category": ["crypto", "pwn"],
+    "difficulty": "medium",
+    "flag": "justCTF{p3rf3c71y_un6r34k4b13_1f_n0t_71m3_7r4v31s}",
+    "version": 2
+}

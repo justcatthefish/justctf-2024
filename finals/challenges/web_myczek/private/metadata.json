@@ -1,0 +1,10 @@
+{
+    "identifier": "web_myczek",
+    "name": "myczek",
+    "category": "web",
+    "difficulty": "hard",
+    "flag": [
+        "justCTF{r3spect4!}"
+    ],
+    "version": 5
+}

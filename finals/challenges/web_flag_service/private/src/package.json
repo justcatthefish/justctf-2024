@@ -1,0 +1,13 @@
+{
+  "name": "web_flag_service",
+  "version": "1.0.0",
+  "description": "justCTF 2024 Finals",
+  "author": "terjanq",
+  "main": "app.js",
+  "dependencies": {
+    "cookie-session": "^2.1.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "puppeteer": "^23.4.0"
+  }
+}

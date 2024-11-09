@@ -1,0 +1,16 @@
+{:Application("/a" 0)
+    :Items (
+    	{:Link linkApplicationStart
+    		:EventSource 0
+    		:EventType IsRunning
+    		:LinkEffect (
+    			:TransitionTo (("~/tv_overlay.asn" 0))
+    		)
+    	}
+    )
+    :TextCHook 10
+    :TextColour			'=2A=2A=2A=00'
+    :BackgroundColour 	'=FF=FF=FF=00'
+    :Font				"rec://font/uk1"
+    :FontAttributes		"plain.24.27.0"
+}
